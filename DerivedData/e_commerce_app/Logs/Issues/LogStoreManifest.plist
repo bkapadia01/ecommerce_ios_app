@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>1E7FAF56-0E45-4BAD-9689-7E25666BEA4B</key>
+		<key>551405C0-99FD-47FF-9A50-8BCF78EB8D7A</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogMajorGroupSection</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
 			<key>fileName</key>
-			<string>1E7FAF56-0E45-4BAD-9689-7E25666BEA4B.xcactivitylog</string>
+			<string>551405C0-99FD-47FF-9A50-8BCF78EB8D7A.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -26,41 +26,13 @@
 			<key>signature</key>
 			<string>e_commerce_app-hcesqzjiiqevfrcbujzqghzofgib</string>
 			<key>timeStartedRecording</key>
-			<real>685423596.68661797</real>
+			<real>685424689.61174798</real>
 			<key>timeStoppedRecording</key>
-			<real>685423596.71872997</real>
+			<real>685424695.41870403</real>
 			<key>title</key>
 			<string>Build target e_commerce_app</string>
 			<key>uniqueIdentifier</key>
-			<string>1E7FAF56-0E45-4BAD-9689-7E25666BEA4B</string>
-		</dict>
-		<key>E110C7BC-4971-41BE-92F5-33DD32B0F1BF</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
-			<key>fileName</key>
-			<string>E110C7BC-4971-41BE-92F5-33DD32B0F1BF.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>signature</key>
-			<string>e_commerce_app-gbvacwxofzeksddnbdmfqoftdiio</string>
-			<key>timeStartedRecording</key>
-			<real>685070076.11898804</real>
-			<key>timeStoppedRecording</key>
-			<real>685070079.61814594</real>
-			<key>title</key>
-			<string>Build target e_commerce_app</string>
-			<key>uniqueIdentifier</key>
-			<string>E110C7BC-4971-41BE-92F5-33DD32B0F1BF</string>
+			<string>551405C0-99FD-47FF-9A50-8BCF78EB8D7A</string>
 		</dict>
 	</dict>
 	<key>preserveOldLogs</key>
