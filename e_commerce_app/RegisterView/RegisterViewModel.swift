@@ -14,10 +14,10 @@ class RegisterViewModel {
     func saveRegisteredUser(firstName: String, lastName: String, username: String, password: String) {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let context = appDelegate.persistentContainer.viewContext
-
+            
             guard let entityDescription = NSEntityDescription.entity(forEntityName: "RegisteredUser", in: context) else { return }
             let newUser = RegisteredUser(entity: entityDescription,
-                                          insertInto: context)
+                                         insertInto: context)
             newUser.firstName = firstName
             newUser.lastName = lastName
             newUser.username = username
@@ -29,13 +29,13 @@ class RegisterViewModel {
             do {
                 try context.save()
                 print("Save Successfull")
-
+                
             } catch let error as NSError{
                 print("Saving Error: \(error)")
             }
         }
     }
-
+    
     func fetchRegisteredUsers() -> [RegisteredUser] {
         let listOfUsernames: [String]
         
@@ -56,7 +56,7 @@ class RegisterViewModel {
         return []
     }
     
-     func isUsernameUnique(_ username: String) -> Bool {
+    func isUsernameUnique(_ username: String) -> Bool {
         if fetchRegisteredUsers().contains(where: { $0.username == username }) {
             return false
         } else {
@@ -64,6 +64,38 @@ class RegisterViewModel {
         }
     }
     
+    
+    // return error string if validation is incorrect else return nil
+    func validateRegistrationFields(firstName: String, lastName: String, username: String, password: String, repeatedPassword: String) -> String? {
+
+        if firstName == "" ||
+            lastName  == "" ||
+            username == "" ||
+            password == "" ||
+            repeatedPassword == "" {
+            return "Please complete all fields."
+        }
+        
+        if username.count < 5 {
+            return "Username must greater than 4 chars."
+        }
+        
+        // validate if username is unique
+        
+        if password != repeatedPassword {
+            return "The passwords do not match."
+        }
+        
+        if password.count < 5 || repeatedPassword.count < 5 {
+            return "Password must greater than 4 chars."
+        }
+        
+        if self.isUsernameUnique(username) == false {
+            return "Username already exists."
+        }
+        
+        return nil
+    }
 }
 
 
