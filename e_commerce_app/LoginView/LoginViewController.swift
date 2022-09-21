@@ -53,36 +53,17 @@ class LoginViewController: UIViewController {
         return nil
     }
     
-    
-    
-    private func loginCredentialsValid() -> String? {
-        
-            let usernameEntered = loginUsernameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let passwordEntered = loginPasswordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        if loginViewModel.login(username: usernameEntered, password: passwordEntered) == nil {
-        
-         return "failed"
-        }
-        return nil
-        
-    }
-    
     private func goToHomePage() {
         let controller = storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
-        
-//        present(controller, animated: true)
     }
     
     @IBAction func signInButton(_ sender: UIButton) {
-        
         let loginFieldsErrorExists = validateSignInFields()
-        let loginCredentialsValid = loginCredentialsValid()
 
-        if loginFieldsErrorExists != nil || loginCredentialsValid != nil {
+        if loginFieldsErrorExists != nil {
             showErrorMessaage(loginFieldsErrorExists!)
             return
         } else  {
-            
             guard let fetchRegistredUserLogin = loginViewModel.fetchRegisteredUser(username: loginUsernameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) else {
                 showErrorMessaage("Invalid Credentials!")
                 return
@@ -102,9 +83,7 @@ class LoginViewController: UIViewController {
     }
     
     private func transitionToHomeScreen() {
-        let homeViewController =
-        storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
-        
+        let homeViewController = storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }

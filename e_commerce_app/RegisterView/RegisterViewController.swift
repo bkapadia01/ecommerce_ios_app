@@ -28,7 +28,6 @@ class RegisterViewController: UIViewController {
         self.transitionToLoginScreen()
     }
     
-    
     @IBAction func signUpButtonTapped(_ sender: Any) {
         guard let firstNameEnteredText = firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let lastNameEnteredText = lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }

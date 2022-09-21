@@ -8,7 +8,7 @@
 import Foundation
 
 final class HomeViewModel {
-    var welcomeMessage: ObservableObject<String?> = ObservableObject(nil)
+//    var welcomeMessage: ObservableObject<String?> = ObservableObject(nil)
     
     
     func getLoggedInUser() {
