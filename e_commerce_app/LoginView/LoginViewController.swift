@@ -12,34 +12,20 @@ import CoreData
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginErrorLabel: UILabel?
-    
     @IBOutlet weak var loginUsernameField: UITextField!
-    
     @IBOutlet weak var loginPasswordField: UITextField!
     
     private let loginViewModel = LoginViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginErrorLabel?.alpha = 0 // hide error label
-        setupBinder()
+        loginErrorLabel?.alpha = 0 // hide error label on launch
     }
     
     @IBAction func signInButtonTapped(_ sender: Any) {
-        
         validateSignInFields()
     }
-    
-    private func setupBinder() {
-        loginViewModel.error.bind { [weak self] error in
-            if let error = error {
-                print(error)
-            } else {
-                self?.goToHomePage()
-            }
-        }
-    }
-    
+
     private func validateSignInFields() -> String? {
         if  loginUsernameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             return "Please enter a username"

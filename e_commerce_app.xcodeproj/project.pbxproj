@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C3539F9728D3C8E10047EC0A /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3539F8128D3C8E10047EC0A /* ObservableObject.swift */; };
 		C3539F9828D3C8E10047EC0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3539F8228D3C8E10047EC0A /* Assets.xcassets */; };
-		C3539F9928D3C8E10047EC0A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3539F8328D3C8E10047EC0A /* User.swift */; };
-		C3539F9A28D3C8E10047EC0A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3539F8428D3C8E10047EC0A /* NetworkService.swift */; };
 		C3539F9D28D3C8E10047EC0A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3539F8A28D3C8E10047EC0A /* HomeViewModel.swift */; };
 		C3539F9E28D3C8E10047EC0A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3539F8B28D3C8E10047EC0A /* HomeViewController.swift */; };
 		C3539F9F28D3C8E10047EC0A /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3539F8D28D3C8E10047EC0A /* RegisterViewController.swift */; };
@@ -29,10 +26,7 @@
 
 /* Begin PBXFileReference section */
 		C3539F8028D3C8E10047EC0A /* UsersModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UsersModel.xcdatamodel; sourceTree = "<group>"; };
-		C3539F8128D3C8E10047EC0A /* ObservableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
 		C3539F8228D3C8E10047EC0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C3539F8328D3C8E10047EC0A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		C3539F8428D3C8E10047EC0A /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		C3539F8A28D3C8E10047EC0A /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C3539F8B28D3C8E10047EC0A /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C3539F8D28D3C8E10047EC0A /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -69,10 +63,7 @@
 				C3539FA628D3C97B0047EC0A /* LaunchScreen.storyboard */,
 				C3539FA728D3C97B0047EC0A /* Main.storyboard */,
 				C3539F7F28D3C8E10047EC0A /* UsersModel.xcdatamodeld */,
-				C3539F8128D3C8E10047EC0A /* ObservableObject.swift */,
 				C3539F8228D3C8E10047EC0A /* Assets.xcassets */,
-				C3539F8328D3C8E10047EC0A /* User.swift */,
-				C3539F8428D3C8E10047EC0A /* NetworkService.swift */,
 				C3539F8928D3C8E10047EC0A /* HomeView */,
 				C3539F8C28D3C8E10047EC0A /* RegisterView */,
 				C3539F8F28D3C8E10047EC0A /* AppDelegate.swift */,
@@ -244,10 +235,7 @@
 				C3539FA528D3C8E10047EC0A /* LoginViewController.swift in Sources */,
 				C3539FA028D3C8E10047EC0A /* RegisterViewModel.swift in Sources */,
 				C3539FC728D426050047EC0A /* RegisteredUser+CoreDataProperties.swift in Sources */,
-				C3539F9928D3C8E10047EC0A /* User.swift in Sources */,
-				C3539F9A28D3C8E10047EC0A /* NetworkService.swift in Sources */,
 				C3539FCB28D54E1F0047EC0A /* UsersModel.xcdatamodeld in Sources */,
-				C3539F9728D3C8E10047EC0A /* ObservableObject.swift in Sources */,
 				C3539FC628D426050047EC0A /* RegisteredUser+CoreDataClass.swift in Sources */,
 				C3539FA128D3C8E10047EC0A /* AppDelegate.swift in Sources */,
 			);

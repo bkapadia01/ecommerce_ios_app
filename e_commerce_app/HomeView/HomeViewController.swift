@@ -17,18 +17,18 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
 //        viewModel.getLoggedInUser()
-        setupBinder()
+//        setupBinder()
     }
     
     private func setupBinder() {
-        viewModel.welcomeMessage.bind{ [weak self] message in
+//        viewModel.welcomeMessage.bind{ [weak self] message in
 //            self?.homeWelcomeLabel.text = message
 //            self?.save(value: )
 //            self?.retrieveValues()
         }
     }
     
-}
+
 
 extension HomeViewController {
     func save(value: String) {
