@@ -1,0 +1,2 @@
+Target dependency graph (1 target)
+e_commerce_app in e_commerce_app, no dependencies

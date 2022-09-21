@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>1E7FAF56-0E45-4BAD-9689-7E25666BEA4B</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
+			<key>fileName</key>
+			<string>1E7FAF56-0E45-4BAD-9689-7E25666BEA4B.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>e_commerce_app-hcesqzjiiqevfrcbujzqghzofgib</string>
+			<key>timeStartedRecording</key>
+			<real>685423596.68661797</real>
+			<key>timeStoppedRecording</key>
+			<real>685423596.71872997</real>
+			<key>title</key>
+			<string>Build target e_commerce_app</string>
+			<key>uniqueIdentifier</key>
+			<string>1E7FAF56-0E45-4BAD-9689-7E25666BEA4B</string>
+		</dict>
+		<key>E110C7BC-4971-41BE-92F5-33DD32B0F1BF</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
+			<key>fileName</key>
+			<string>E110C7BC-4971-41BE-92F5-33DD32B0F1BF.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>e_commerce_app-gbvacwxofzeksddnbdmfqoftdiio</string>
+			<key>timeStartedRecording</key>
+			<real>685070076.11898804</real>
+			<key>timeStoppedRecording</key>
+			<real>685070079.61814594</real>
+			<key>title</key>
+			<string>Build target e_commerce_app</string>
+			<key>uniqueIdentifier</key>
+			<string>E110C7BC-4971-41BE-92F5-33DD32B0F1BF</string>
+		</dict>
+	</dict>
+	<key>preserveOldLogs</key>
+	<true/>
+</dict>
+</plist>
