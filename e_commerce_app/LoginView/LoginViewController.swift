@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setDelegates()
         loginErrorLabel?.alpha = 0 // hide error label on launch
     }
     
@@ -41,6 +42,11 @@ class LoginViewController: UIViewController {
     
     private func goToHomePage() {
         let controller = storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
+    }
+    
+    private func setDelegates() {
+        loginUsernameField.delegate = self
+        loginPasswordField.delegate = self
     }
     
     @IBAction func signInButton(_ sender: UIButton) {
@@ -72,5 +78,17 @@ class LoginViewController: UIViewController {
         let homeViewController = storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        loginUsernameField.resignFirstResponder()
+        loginPasswordField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
