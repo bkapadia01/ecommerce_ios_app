@@ -9,9 +9,7 @@ import Foundation
 import CoreData
 import UIKit
 
-final class HomeViewModel {
-//    var welcomeMessage: ObservableObject<String?> = ObservableObject(nil)
-    
+final class HomeViewModel {    
     
     func getLoggedInUser() {
 

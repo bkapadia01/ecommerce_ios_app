@@ -23,23 +23,6 @@ class LoginViewController: UIViewController {
         loginErrorLabel?.alpha = 0 // hide error label on launch
     }
     
-    @IBAction func signInButtonTapped(_ sender: Any) {
-        validateSignInFields()
-    }
-
-    private func validateSignInFields() -> String? {
-        if  loginUsernameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            return "Please enter a username"
-        }
-        
-        if
-            loginPasswordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            return "Please enter a password"
-        }
-        
-        return nil
-    }
-    
     private func goToHomePage() {
         let controller = storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
     }
@@ -49,18 +32,27 @@ class LoginViewController: UIViewController {
         loginPasswordField.delegate = self
     }
     
-    @IBAction func signInButton(_ sender: UIButton) {
-        let loginFieldsErrorExists = validateSignInFields()
+    @IBAction func signInButtonTapped(_ sender: UIButton) {
+        guard let loginUsername = loginUsernameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            print("Error parsing username field")
+            return
+        }
+        guard let loginPassword = loginPasswordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            print("Error retrieving password field")
+            return
+        }
+        
+        let loginFieldsErrorExists = loginViewModel.validateSignInFields(loginUsernameField: loginUsername, loginPaswordField: loginPassword)
 
         if loginFieldsErrorExists != nil {
             showErrorMessaage(loginFieldsErrorExists!)
             return
         } else  {
-            guard let fetchRegistredUserLogin = loginViewModel.fetchRegisteredUser(username: loginUsernameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            guard let fetchRegistredUserLogin = loginViewModel.fetchRegisteredUser(username: loginUsername) else {
                 showErrorMessaage("Invalid Credentials!")
                 return
             }
-            if loginViewModel.validatePasswordForRegisteredUser(registeredUser: fetchRegistredUserLogin, password: loginPasswordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) {
+            if loginViewModel.validatePasswordForRegisteredUser(registeredUser: fetchRegistredUserLogin, password: loginPassword) {
                     transitionToHomeScreen()
             } else {
                 showErrorMessaage("Invalid Credentials!")

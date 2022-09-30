@@ -41,8 +41,17 @@ final class LoginViewModel {
         } else {
             return false
         }
-        
     }
 
+    func validateSignInFields(loginUsernameField: String, loginPaswordField: String) -> String? {
+        if  loginUsernameField == "" {
+            return "Please enter a username"
+        }
+        
+        if
+            loginPaswordField == "" {
+            return "Please enter a password"
+        }
+        return nil
+    }
 }
-
