@@ -11,10 +11,7 @@ import UIKit
 
 final class HomeViewModel {    
     
-    func getLoggedInUser() {
-
+    func getLoggedInUsername() {
+        
     }
-    
-    
-    
 }

@@ -23,10 +23,6 @@ class LoginViewController: UIViewController {
         loginErrorLabel?.alpha = 0 // hide error label on launch
     }
     
-    private func goToHomePage() {
-        let controller = storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
-    }
-    
     private func setDelegates() {
         loginUsernameField.delegate = self
         loginPasswordField.delegate = self
@@ -53,6 +49,7 @@ class LoginViewController: UIViewController {
                 return
             }
             if loginViewModel.validatePasswordForRegisteredUser(registeredUser: fetchRegistredUserLogin, password: loginPassword) {
+                    
                     transitionToHomeScreen()
             } else {
                 showErrorMessaage("Invalid Credentials!")
