@@ -18,15 +18,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        viewModel.getLoggedInUser()
-        //        setupBinder()
     }
     
-    private func setupBinder() {
-        //        viewModel.welcomeMessage.bind{ [weak self] message in
-        //            self?.homeWelcomeLabel.text = message
-        //            self?.save(value: )
-        //            self?.retrieveValues()
-    }
 }
 
