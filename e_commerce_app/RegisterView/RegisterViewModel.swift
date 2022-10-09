@@ -64,38 +64,33 @@ class RegisterViewModel {
         }
     }
     
-    
-    // return error string if validation is incorrect else return nil
-    func validateRegistrationFields(firstName: String, lastName: String, username: String, password: String, repeatedPassword: String) -> String? {
-
-        if firstName == "" ||
-            lastName  == "" ||
-            username == "" ||
-            password == "" ||
-            repeatedPassword == "" {
-            return "Please complete all fields."
-        }
+    // return error string if validation is incorrect else throw error
+    func validateRegistrationFields(firstName: String, lastName: String, username: String, password: String, repeatedPassword: String) throws {
         
-        if username.count < 5 {
-            return "Username must greater than 4 chars."
-        }
+        do {
+            guard !firstName.isEmpty &&
+                    !lastName.isEmpty &&
+                    !username.isEmpty &&
+                    !password.isEmpty &&
+                    !repeatedPassword.isEmpty else {
+                throw ValidationError.registrationFieldsIncomplete.nsError
+            }
+            
+            guard username.count > 4 else {
+                throw ValidationError.usernameLengthTooShort.nsError
+            }
+            
+            guard password.count > 4 else {
+                throw ValidationError.passwordLengthTooShort.nsError
+            }
+            
+            guard password == repeatedPassword else {
+                throw ValidationError.passwordsDoNotMatch.nsError
+            }
         
-        // validate if username is unique
-        
-        if password != repeatedPassword {
-            return "The passwords do not match."
-        }
-        
-        if password.count < 5 || repeatedPassword.count < 5 {
-            return "Password must greater than 4 chars."
-        }
-        
-        if self.isUsernameUnique(username) == false {
-            return "Username already exists."
-        }
-        
-        return nil
+            guard self.isUsernameUnique(username) == true else {
+                throw ValidationError.usernameAlreadyExists.nsError
+            }
+        } 
     }
 }
-
-

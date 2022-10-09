@@ -29,26 +29,38 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction func signUpButtonTapped(_ sender: Any) {
-        guard let firstNameEnteredText = firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        guard let lastNameEnteredText = lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        guard let usernameEnteredText = userNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        guard let passwordEnteredText = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-        guard let repeatedPasswordEnteredText =  repeatPasswordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        guard let firstNameEnteredTextfield = firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            print("Error parsing last name field")
+            return
+        }
         
-        let registrationFieldErrorExist = registerViewModel.validateRegistrationFields(firstName: firstNameEnteredText,
-                                                                                       lastName: lastNameEnteredText,
-                                                                                       username: usernameEnteredText,
-                                                                                       password: passwordEnteredText,
-                                                                                       repeatedPassword: repeatedPasswordEnteredText)
+        guard let lastNameEnteredTextfield = lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            print("Error parsing last name field")
+            return
+        }
+        guard let usernameEnteredTextfield = userNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            print("Error parsing last name field")
+            return
+        }
+        guard let passwordEnteredTextfield = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            print("Error parsing last name field")
+            return
+        }
+        guard let repeatedPasswordEnteredTextfield =  repeatPasswordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            print("Error parsing last name field")
+            return
+        }
         
-        if registrationFieldErrorExist != nil {
-            showErrorMessaage(registrationFieldErrorExist!)
-        } else {
-            registerViewModel.saveRegisteredUser(firstName: firstNameEnteredText,
-                                                 lastName: lastNameEnteredText,
-                                                 username: usernameEnteredText,
-                                                 password: passwordEnteredText)
-            self.registrationSuccessfulAlert()
+        do {
+            try registerViewModel.validateRegistrationFields(firstName: firstNameEnteredTextfield, lastName: lastNameEnteredTextfield, username: usernameEnteredTextfield, password: passwordEnteredTextfield, repeatedPassword: repeatedPasswordEnteredTextfield)
+            
+                registerViewModel.saveRegisteredUser(firstName: firstNameEnteredTextfield,
+                                                     lastName: lastNameEnteredTextfield,
+                                                     username: usernameEnteredTextfield,
+                                                     password: passwordEnteredTextfield)
+                self.registrationSuccessfulAlert()
+        } catch {
+            showErrorMessaage(error.localizedDescription)
         }
     }
     
@@ -66,7 +78,7 @@ class RegisterViewController: UIViewController {
                                                          message: "Registration was successful, please login with your credentials.",
                                                          preferredStyle: UIAlertController.Style.alert)
         
-        registrationSuccessAlert.addAction(UIAlertAction(title: "Ok",
+        registrationSuccessAlert.addAction(UIAlertAction(title: "OK",
                                                          style: .default,
                                                          handler: { (action: UIAlertAction!)in self.transitionToLoginScreen()}
                                                         ))
