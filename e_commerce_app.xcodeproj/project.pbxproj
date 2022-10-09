@@ -27,6 +27,7 @@
 		C38C862D28E63D7C001A9841 /* Order+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C862928E63D7C001A9841 /* Order+CoreDataProperties.swift */; };
 		C38C862E28E63D7C001A9841 /* Order+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C862A28E63D7C001A9841 /* Order+CoreDataClass.swift */; };
 		C38C863228E93B86001A9841 /* ValidationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C863128E93B86001A9841 /* ValidationErrors.swift */; };
+		C38C863428F27948001A9841 /* ProductsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C863328F27948001A9841 /* ProductsAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		C38C862928E63D7C001A9841 /* Order+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Order+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C38C862A28E63D7C001A9841 /* Order+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Order+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C38C863128E93B86001A9841 /* ValidationErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationErrors.swift; sourceTree = "<group>"; };
+		C38C863328F27948001A9841 /* ProductsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsAPI.swift; sourceTree = "<group>"; };
 		C3A4372928C57FD200A1105B /* e_commerce_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = e_commerce_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -107,6 +109,7 @@
 			children = (
 				C3539FC928D548330047EC0A /* Constants.swift */,
 				C38C863128E93B86001A9841 /* ValidationErrors.swift */,
+				C38C863328F27948001A9841 /* ProductsAPI.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				C38C863228E93B86001A9841 /* ValidationErrors.swift in Sources */,
 				C3539FA528D3C8E10047EC0A /* LoginViewController.swift in Sources */,
 				C3539FA028D3C8E10047EC0A /* RegisterViewModel.swift in Sources */,
+				C38C863428F27948001A9841 /* ProductsAPI.swift in Sources */,
 				C3539FC728D426050047EC0A /* RegisteredUser+CoreDataProperties.swift in Sources */,
 				C3539FCB28D54E1F0047EC0A /* UsersModel.xcdatamodeld in Sources */,
 				C38C862D28E63D7C001A9841 /* Order+CoreDataProperties.swift in Sources */,
