@@ -13,11 +13,21 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var homeWelcomeLabel: UILabel!
     
-    private let homeViewModel = HomeViewModel()
+    private let homeViewModel: HomeViewModel
     
+    init?(homeViewModel: HomeViewModel, coder: NSCoder) {
+        self.homeViewModel = homeViewModel
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeViewModel.getLoggedInUsername()
+        
+        homeWelcomeLabel.text = "Welcome \(homeViewModel.getLoggedInUsername())"
     }
     
 }
