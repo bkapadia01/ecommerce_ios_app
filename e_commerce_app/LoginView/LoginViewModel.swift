@@ -39,9 +39,7 @@ final class LoginViewModel {
                     throw ValidationError.invalidCredentials.nsError
                 }
                 userID = registeredUser.uuid
-            } catch let error as NSError{
-                print("Fetching Error: \(error)")
-            }
+            } 
         }
     }
 }
