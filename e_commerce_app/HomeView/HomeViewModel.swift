@@ -35,6 +35,36 @@ final class HomeViewModel {
             print("Failed to fetch logged in username with given UUID")
         }
         return loggedInUsername
+    }
+    
+    func getAllProducts() {
+        let url = URL(string: "https://fakestoreapi.com/products")
+        
+        let task = URLSession.shared.dataTask(with: url!, completionHandler: {
+            data, response, error in
+            
+            // Validation
+            guard let data = data, error == nil else {
+                print("Unable to get data from API")
+                return
+            }
+            
+            // convert data to models object
+            var json: [WelcomeElement]?
+            do {
+                json = try JSONDecoder().decode([WelcomeElement].self, from: data)
+            } catch {
+                print("Error: \(error)")
+            }
 
+            guard let results = json else {
+                return
+            }
+                        
+            let itemTitle = results.forEach { WelcomeElement in
+                print(WelcomeElement.title as Any)
+            }
+        })
+        task.resume()
     }
 }

@@ -37,4 +37,3 @@ struct Rating: Codable {
     var count: Int?
 }
 
-typealias Welcome = [WelcomeElement]

@@ -9,6 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var loginImageIcon: UIImageView!
     @IBOutlet weak var loginErrorLabel: UILabel?
     @IBOutlet weak var loginUsernameField: UITextField!
     @IBOutlet weak var loginPasswordField: UITextField!
@@ -17,6 +18,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginImageIcon.image = UIImage(named: "homeShoppingArt")
         setDelegates()
         loginErrorLabel?.alpha = 0 // hide error label on launch
     }
