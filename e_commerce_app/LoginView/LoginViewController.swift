@@ -15,8 +15,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginUsernameField: UITextField!
     @IBOutlet weak var loginPasswordField: UITextField!
     
-    private let loginViewModel = LoginViewModel()
-
+    let loginViewModel = LoginViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegates()
@@ -34,37 +34,34 @@ class LoginViewController: UIViewController {
             return
         }
         guard let loginPassword = loginPasswordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error retrieving password field")
+            print("Error parsing password field")
             return
         }
         
-        let loginFieldsErrorExists = loginViewModel.validateSignInFields(loginUsernameField: loginUsername, loginPaswordField: loginPassword)
-
-        if loginFieldsErrorExists != nil {
-            showErrorMessaage(loginFieldsErrorExists!)
-            return
-        } else  {
-            guard let fetchRegistredUserLogin = loginViewModel.fetchRegisteredUser(username: loginUsername) else {
-                showErrorMessaage("Invalid Credentials!")
-                return
-            }
-            if loginViewModel.validatePasswordForRegisteredUser(registeredUser: fetchRegistredUserLogin, password: loginPassword) {
-                    
-                    transitionToHomeScreen()
-            } else {
-                showErrorMessaage("Invalid Credentials!")
-            }
-            
+        do {
+            try loginViewModel.validateCredentials(username: loginUsername, password: loginPassword)
+            transitionToHomeScreen()
+        } catch {
+            showErrorMessaage(error.localizedDescription)
         }
     }
     
+
     private func showErrorMessaage(_ message: String) {
         loginErrorLabel?.text = message
         loginErrorLabel?.alpha = 1
     }
     
     private func transitionToHomeScreen() {
-        let homeViewController = storyboard?.instantiateViewController(withIdentifier: Constants.Stroyboard.homeViewController) as? HomeViewController
+        
+        let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeViewController, creator: { coder in
+            guard let userID = self.loginViewModel.userID else {
+                preconditionFailure("UserID not set")
+            }
+            let homeViewModel = HomeViewModel(userID: userID)
+            return HomeViewController(homeViewModel: homeViewModel, coder: coder)
+        })
+        
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }

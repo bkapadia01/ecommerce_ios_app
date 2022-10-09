@@ -10,9 +10,20 @@ import UIKit
 import CoreData
 
 final class LoginViewModel {
+    var userID: UUID? = nil
     
-    
-    func fetchRegisteredUser(username: String) -> RegisteredUser? {
+    func validateCredentials(username: String, password: String) throws {
+        
+        guard !username.isEmpty || !password.isEmpty else {
+            throw ValidationError.missingUsernamePassword.nsError
+        }
+        guard !username.isEmpty else {
+            throw ValidationError.missingUsername.nsError
+        }
+        guard !password.isEmpty else {
+            throw ValidationError.missingPassword.nsError
+        }
+        
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let context = appDelegate.persistentContainer.viewContext
             let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
@@ -20,38 +31,18 @@ final class LoginViewModel {
             fetchRequest.predicate = predicate
             do {
                 guard let registeredUser = try context.fetch(fetchRequest).first else {
-                    print("Username does not exists")
-                    return nil
+                    print("Username does not exists in database")
+                    throw ValidationError.invalidCredentials.nsError
                 }
                 print("user found:\n \(registeredUser)")
-                return registeredUser
+                if registeredUser.password != password {
+                    print("passwords does not match exiting user in database")
+                    throw ValidationError.invalidCredentials.nsError
+                }
+                userID = registeredUser.uuid
             } catch let error as NSError{
                 print("Fetching Error: \(error)")
             }
         }
-        return nil
-    }
-    
-    func validatePasswordForRegisteredUser(registeredUser: RegisteredUser, password: String) -> Bool {
-        print(registeredUser.password)
-        print(password)
-        
-        if registeredUser.password == password {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    func validateSignInFields(loginUsernameField: String, loginPaswordField: String) -> String? {
-        if  loginUsernameField == "" {
-            return "Please enter a username"
-        }
-        
-        if
-            loginPaswordField == "" {
-            return "Please enter a password"
-        }
-        return nil
     }
 }
