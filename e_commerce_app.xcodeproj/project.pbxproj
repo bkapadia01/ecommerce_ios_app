@@ -28,6 +28,7 @@
 		C38C862E28E63D7C001A9841 /* Order+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C862A28E63D7C001A9841 /* Order+CoreDataClass.swift */; };
 		C38C863228E93B86001A9841 /* ValidationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C863128E93B86001A9841 /* ValidationErrors.swift */; };
 		C38C863428F27948001A9841 /* ProductsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C863328F27948001A9841 /* ProductsAPI.swift */; };
+		C38C863628F3BF0C001A9841 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C863528F3BF0C001A9841 /* HomeCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		C38C862A28E63D7C001A9841 /* Order+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Order+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C38C863128E93B86001A9841 /* ValidationErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationErrors.swift; sourceTree = "<group>"; };
 		C38C863328F27948001A9841 /* ProductsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsAPI.swift; sourceTree = "<group>"; };
+		C38C863528F3BF0C001A9841 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		C3A4372928C57FD200A1105B /* e_commerce_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = e_commerce_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 		C3539F8928D3C8E10047EC0A /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				C38C863528F3BF0C001A9841 /* HomeCollectionViewController.swift */,
 				C3539F8A28D3C8E10047EC0A /* HomeViewModel.swift */,
 				C3539F8B28D3C8E10047EC0A /* HomeViewController.swift */,
 			);
@@ -249,6 +252,7 @@
 				C3539F9D28D3C8E10047EC0A /* HomeViewModel.swift in Sources */,
 				C38C862C28E63D7C001A9841 /* Product+CoreDataClass.swift in Sources */,
 				C38C862E28E63D7C001A9841 /* Order+CoreDataClass.swift in Sources */,
+				C38C863628F3BF0C001A9841 /* HomeCollectionViewController.swift in Sources */,
 				C3539F9F28D3C8E10047EC0A /* RegisterViewController.swift in Sources */,
 				C3539F9E28D3C8E10047EC0A /* HomeViewController.swift in Sources */,
 				C3539FCA28D548330047EC0A /* Constants.swift in Sources */,

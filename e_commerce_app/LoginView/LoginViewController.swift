@@ -54,14 +54,14 @@ class LoginViewController: UIViewController {
     
     private func transitionToHomeScreen() {
         
-        let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeViewController, creator: { coder in
+        let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeCollectionViewController, creator: { coder in
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
             let homeViewModel = HomeViewModel(userID: userID)
-            return HomeViewController(homeViewModel: homeViewModel, coder: coder)
+            return HomeCollectionViewController(homeViewModel: homeViewModel, coder: coder)
+//            return HomeViewController(homeViewModel: homeViewModel, coder: coder)
         })
-        
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
