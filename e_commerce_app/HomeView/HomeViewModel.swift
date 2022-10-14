@@ -8,16 +8,16 @@
 import CoreData
 import UIKit
 
+enum ResponseError: Error {
+    case unknownAPIResponse
+    case generic
+}
+
 final class HomeViewModel {
     let userID: UUID
     var products: [WelcomeElement] = []
     init(userID: UUID) {
         self.userID = userID
-    }
-    
-    enum Error: Swift.Error {
-        case unknownAPIResponse
-        case generic
     }
     
     func getLoggedInUsername() -> String {
@@ -42,40 +42,38 @@ final class HomeViewModel {
         return loggedInUsername
     }
     
-    func getAllProducts(completion: @escaping (Result<WelcomeElement, Swift.Error>) -> Void) {
+    func getAllProducts(completion: @escaping (Result<[WelcomeElement], Error>) -> Void) {
         
         guard let urlAllProducts = URL(string: "https://fakestoreapi.com/products") else {
-            completion(.failure(Error.unknownAPIResponse))
+            completion(.failure(ResponseError.unknownAPIResponse))
             return
         }
         
         let task = URLSession.shared.dataTask(with: URLRequest(url: urlAllProducts)) { data, response, error in
-            
+
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
             // Validation
             guard
                 (response as? HTTPURLResponse) != nil,
                 let data = data
             else {
-                completion(.failure(Error.unknownAPIResponse))
+                completion(.failure(ResponseError.unknownAPIResponse))
                 return
             }
-            
             // convert data to models object
             do {
                 guard
                     let resultJson = try JSONDecoder().decode([WelcomeElement]?.self, from: data)
                 else {
-                    completion(.failure(Error.unknownAPIResponse))
+                    completion(.failure(ResponseError.unknownAPIResponse)) // specificy json dedode error 
                     return
                 }
-                self.products = resultJson
-                completion(.success(WelcomeElement())
-                print(self.products)
+                self.products.insert(contentsOf: resultJson, at: 0)
+                
+                completion(.success(resultJson))
             }
             catch {
                 completion(.failure(error))

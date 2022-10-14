@@ -53,17 +53,22 @@ class LoginViewController: UIViewController {
     }
     
     private func transitionToHomeScreen() {
-        
-        let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeCollectionViewController, creator: { coder in
+        if let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeCollectionViewController, creator: { coder in
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
+            
             let homeViewModel = HomeViewModel(userID: userID)
             return HomeCollectionViewController(homeViewModel: homeViewModel, coder: coder)
-//            return HomeViewController(homeViewModel: homeViewModel, coder: coder)
-        })
-        view.window?.rootViewController = homeViewController
-        view.window?.makeKeyAndVisible()
+            
+        }) {
+            let mainNavbarController = UINavigationController(rootViewController: homeViewController)
+            let mainTabBarController = UITabBarController()
+            
+            mainTabBarController.setViewControllers([mainNavbarController], animated: true)
+            view.window?.rootViewController = mainTabBarController
+            view.window?.makeKeyAndVisible()
+        }
     }
 }
 

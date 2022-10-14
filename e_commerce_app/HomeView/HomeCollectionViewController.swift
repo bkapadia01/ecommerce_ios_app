@@ -29,8 +29,22 @@ class HomeCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeViewModel.getAllProducts { products in
-            print()
+
+        navigationItem.title = "Welcome " + homeViewModel.getLoggedInUsername()
+        
+        homeViewModel.getAllProducts { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let products):
+                    print(products)
+                    self.productItems = products
+                  
+                case .failure(let error):
+                    print(error)
+                }
+
+                self.collectionView?.reloadData()
+            }
         }
         configureCollectionView()
         
@@ -38,7 +52,7 @@ class HomeCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+//        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
     }
@@ -68,16 +82,20 @@ class HomeCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        let items = homeViewModel.products
-        print(items.count)
-        return items.count
+//        let items = homeViewModel.products[section].count
+//        print(items.count)
+        return productItems.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! HomeItemCollectionViewCell
     
         // Configure the cell
-    
+        print(productItems[indexPath.item].title)
+        cell.backgroundColor = .green
+        cell.itemLabel.text = productItems[indexPath.item].title
         return cell
     }
 
