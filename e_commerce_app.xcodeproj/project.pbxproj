@@ -29,7 +29,6 @@
 		C38C863428F27948001A9841 /* ProductsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C863328F27948001A9841 /* ProductsAPI.swift */; };
 		C38C863628F3BF0C001A9841 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C863528F3BF0C001A9841 /* HomeCollectionViewController.swift */; };
 		C3C0359A28F8F3BB0060490D /* HomeItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0359828F8F3BB0060490D /* HomeItemCollectionViewCell.swift */; };
-		C3C0359B28F8F3BB0060490D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0359928F8F3BB0060490D /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,7 +56,6 @@
 		C38C863528F3BF0C001A9841 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		C3A4372928C57FD200A1105B /* e_commerce_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = e_commerce_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C0359828F8F3BB0060490D /* HomeItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeItemCollectionViewCell.swift; sourceTree = "<group>"; };
-		C3C0359928F8F3BB0060490D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				C3C0359828F8F3BB0060490D /* HomeItemCollectionViewCell.swift */,
-				C3C0359928F8F3BB0060490D /* HomeViewController.swift */,
 				C38C863528F3BF0C001A9841 /* HomeCollectionViewController.swift */,
 				C3539F8A28D3C8E10047EC0A /* HomeViewModel.swift */,
 			);
@@ -265,7 +262,6 @@
 				C38C863428F27948001A9841 /* ProductsAPI.swift in Sources */,
 				C3539FC728D426050047EC0A /* RegisteredUser+CoreDataProperties.swift in Sources */,
 				C3539FCB28D54E1F0047EC0A /* UsersModel.xcdatamodeld in Sources */,
-				C3C0359B28F8F3BB0060490D /* HomeViewController.swift in Sources */,
 				C38C862D28E63D7C001A9841 /* Order+CoreDataProperties.swift in Sources */,
 				C3539FC628D426050047EC0A /* RegisteredUser+CoreDataClass.swift in Sources */,
 				C3C0359A28F8F3BB0060490D /* HomeItemCollectionViewCell.swift in Sources */,
