@@ -76,7 +76,6 @@ class HomeCollectionViewController: UICollectionViewController {
                 cell.layer.borderWidth = 1
             }
         }
-        // look into caching image using context/scratchpad
         cell.itemLabel.text = productName
         return cell
     }
@@ -95,11 +94,6 @@ class HomeCollectionViewController: UICollectionViewController {
             }
             
             itemDetailVC.selectedItem = productItems[selectedIndexPath]
-            
-            //            itemDetailVC.itemDetailViewTitle.text = productItems[selectedIndexPath].title
-            //            itemDetailVC.itemDetailViewTitle.text = productItems[selectedIndexPath].title
-            
-//            itemDetailVC.itemDetailViewTitle.text = productItems[selectedIndexPath].title ?? ""
             print(productItems[selectedIndexPath].title ?? "")
         }
     }

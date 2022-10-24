@@ -5,34 +5,16 @@
 //  Created by Bhavin Kapadia on 2022-09-15.
 //
 
-import CoreData
 import UIKit
 
 class RegisterViewModel {
     
     func saveRegisteredUser(firstName: String, lastName: String, username: String, password: String) {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            
-            guard let entityDescription = NSEntityDescription.entity(forEntityName: "RegisteredUser", in: context) else { return }
-            let newUser = RegisteredUser(entity: entityDescription,
-                                         insertInto: context)
-            newUser.firstName = firstName
-            newUser.lastName = lastName
-            newUser.username = username
-            newUser.password = password
-            guard let uuid = UUID(uuidString: UUID().uuidString) else {
-                preconditionFailure("Unable to create UUID")
-            }
-            newUser.uuid = uuid
-            do {
-                try context.save()
-                print("Save Successfull")
-                
-            } catch let error as NSError{
-                print("Saving Error: \(error)")
-            }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            preconditionFailure()
         }
+        
+        CoreDataService.saveRegisteringUser(firstName: firstName, lastName: lastName, username: username, password: password, appDelegate: appDelegate)
     }
     
     

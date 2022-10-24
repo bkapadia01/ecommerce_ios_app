@@ -43,4 +43,50 @@ enum CoreDataService {
         }
     }
     
+    static func saveRegisteringUser(firstName: String, lastName: String, username: String, password: String, appDelegate: AppDelegate) {
+        let context = appDelegate.persistentContainer.viewContext
+        
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: "RegisteredUser", in: context) else { return }
+        let newUser = RegisteredUser(entity: entityDescription,
+                                     insertInto: context)
+        newUser.firstName = firstName
+        newUser.lastName = lastName
+        newUser.username = username
+        newUser.password = password
+        guard let uuid = UUID(uuidString: UUID().uuidString) else {
+            preconditionFailure("Unable to create UUID")
+        }
+        newUser.uuid = uuid
+        do {
+            try context.save()
+            print("Save Successfull")
+            
+        } catch let error as NSError{
+            print("Saving Error: \(error)")
+        }
+    }
+    
+    static func getLoggedInUsernameForUuid(userID: UUID, appDelegate: AppDelegate) -> String {
+        var loggedInUsername: String = ""
+
+        let context = appDelegate.persistentContainer.viewContext
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "RegisteredUser")
+        let predicate = NSPredicate(format: "uuid = %@", userID as CVarArg)
+        fetch.predicate = predicate
+
+        do {
+            let result = try context.fetch(fetch)
+            print(result)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "username") as! String)
+                loggedInUsername = data.value(forKey: "username") as! String
+            }
+        } catch {
+            print("Failed to fetch logged in username with given UUID")
+        }
+        return loggedInUsername
+
+    }
+    
+    
 }
