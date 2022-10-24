@@ -35,32 +35,18 @@ class RegisterViewModel {
         }
     }
     
-    func fetchRegisteredUsers() -> [RegisteredUser] {
-        let listOfUsernames: [String]
-        
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            
-            do {
-                let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
-                let fetchResults = try context.fetch(fetchRequest)
-                listOfUsernames = fetchResults.map{ $0.username }
-                print(listOfUsernames)
-                return fetchResults
-            } catch {
-                print("Fetching Error: \(error)")
-                listOfUsernames = []
-            }
-        }
-        return []
-    }
     
     func isUsernameUnique(_ username: String) -> Bool {
-        if fetchRegisteredUsers().contains(where: { $0.username == username }) {
-            return false
-        } else {
-            return true
+        guard let  appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            preconditionFailure()
         }
+        
+        let usernames = CoreDataService.getRegistredUsernames(appDelegate: appDelegate)
+        if usernames.contains(where: { $0 == username }) {
+            return false
+        }
+        
+        return true
     }
     
     // return error string if validation is incorrect else throw error

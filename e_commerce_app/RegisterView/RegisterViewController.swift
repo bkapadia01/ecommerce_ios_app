@@ -21,7 +21,7 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerErrorLabel.alpha = 0 // hide error label
-        registerViewModel.fetchRegisteredUsers()
+//        registerViewModel.fetchRegisteredUsers()
     }
     
     @IBAction func cancelRegistrationTapped(_ sender: Any) {
