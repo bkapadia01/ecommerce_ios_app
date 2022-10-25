@@ -94,7 +94,7 @@ class HomeCollectionViewController: UICollectionViewController {
             }
             
             itemDetailVC.selectedItem = productItems[selectedIndexPath]
-            print(productItems[selectedIndexPath].title ?? "")
+            print(productItems[selectedIndexPath].title ?? "") // For test purposes - remove on final code
         }
     }
 }

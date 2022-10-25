@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class ItemDetailViewController: UIViewController {
+    @IBOutlet weak var itemDetailViewItemPrice: UILabel!
     @IBOutlet weak var itemDetailViewImage: UIImageView!
     @IBOutlet weak var itemDetailViewTitle: UILabel!
     @IBOutlet weak var itemDetailViewDescription: UILabel!
@@ -28,6 +29,10 @@ class ItemDetailViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
         self.itemDetailViewTitle.text = selectedItem?.title ?? ""
         self.itemDetailViewDescription.text = selectedItem?.welcomeDescription ?? ""
+        
+        let itemPrice = selectedItem?.price ?? 0.00 as Double
+        let doubleItemPriceString = String(format: "%.2f", itemPrice)
+        self.itemDetailViewItemPrice.text = "$ \(doubleItemPriceString)"
         self.navigationController!.navigationBar.topItem?.backButtonTitle = "Return Home"
 
         let productImageURL = selectedItem?.image
@@ -39,6 +44,9 @@ class ItemDetailViewController: UIViewController {
                 self.itemDetailViewImage.image = UIImage(data: data!)
             }
         }
+        
+    }
+    @IBAction func itemDetailViewAddItemToBag(_ sender: Any) {
         
     }
 }
