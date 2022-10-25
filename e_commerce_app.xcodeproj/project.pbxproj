@@ -76,6 +76,7 @@
 		C3539F7E28D3C8E10047EC0A /* e_commerce_app */ = {
 			isa = PBXGroup;
 			children = (
+				C3A3132B29079F8000EB4759 /* Services */,
 				C3C0359C28FBB9BC0060490D /* ItemDetailView */,
 				C3539FC828D427DB0047EC0A /* Model */,
 				C3539F9328D3C8E10047EC0A /* LoginView */,
@@ -118,7 +119,6 @@
 				C3539FC928D548330047EC0A /* Constants.swift */,
 				C38C863128E93B86001A9841 /* ValidationErrors.swift */,
 				C38C863328F27948001A9841 /* ProductEntities.swift */,
-				C3C035A528FF45190060490D /* CoreDataService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -143,6 +143,14 @@
 				C3539FC528D426050047EC0A /* RegisteredUser+CoreDataProperties.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C3A3132B29079F8000EB4759 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C3C035A528FF45190060490D /* CoreDataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C3A4372028C57FD200A1105B = {
