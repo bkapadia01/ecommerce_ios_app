@@ -15,15 +15,7 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var itemDetailViewDescription: UILabel!
     
    var selectedItem: WelcomeElement?
-//    {
-//        didSet {
-//            itemDetailViewTitle.text = selectedItem
-//            print(itemDetailViewTitle.text)
-//
-//        }
-//    }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)

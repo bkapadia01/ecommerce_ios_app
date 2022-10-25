@@ -10,5 +10,4 @@ import UIKit
 class HomeItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var itemImageView: UIImageView!
-        // add price
 }

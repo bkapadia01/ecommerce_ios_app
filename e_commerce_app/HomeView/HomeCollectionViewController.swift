@@ -65,18 +65,25 @@ class HomeCollectionViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! HomeItemCollectionViewCell
         let productName = productItems[indexPath.item].title
-        let productImageURL = productItems[indexPath.item].image
-        let url = URL(string: productImageURL!)
-        
         DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!) // guard let display default broken image
-            DispatchQueue.main.async {
-                cell.itemImageView.image = UIImage(data: data!) // unwrap this
-                cell.layer.borderColor = UIColor.gray.cgColor
-                cell.layer.borderWidth = 1
+            if let productImageURL = self.productItems[indexPath.item].image,
+               let url = URL(string: productImageURL),
+               let data = try? Data(contentsOf: url) {
+                DispatchQueue.main.async {
+                    cell.itemImageView.image = UIImage(data: data)  // try to reduce repeatetive code with the else portion
+                    cell.layer.borderColor = UIColor.gray.cgColor
+                    cell.layer.borderWidth = 1
+                    cell.itemLabel.text = productName
+                }
+            } else {
+                DispatchQueue.main.async {
+                    cell.itemImageView.image = UIImage(named: "missing_image")
+                    cell.layer.borderColor = UIColor.gray.cgColor
+                    cell.layer.borderWidth = 1
+                    cell.itemLabel.text = productName
+                }
             }
         }
-        cell.itemLabel.text = productName
         return cell
     }
     
