@@ -1,5 +1,5 @@
 //
-//  Order+CoreDataProperties.swift
+//  Cart+CoreDataProperties.swift
 //  e_commerce_app
 //
 //  Created by Bhavin Kapadia on 2022-09-29.
@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 
 
-extension Order {
+extension Cart {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Order> {
-        return NSFetchRequest<Order>(entityName: "Order")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Cart> {
+        return NSFetchRequest<Cart>(entityName: "Cart")
     }
 
     @NSManaged public var userId: UUID?
@@ -24,7 +24,7 @@ extension Order {
 }
 
 // MARK: Generated accessors for products
-extension Order {
+extension Cart {
 
     @objc(addProductsObject:)
     @NSManaged public func addToProducts(_ value: Product)
@@ -40,6 +40,6 @@ extension Order {
 
 }
 
-extension Order : Identifiable {
+extension Cart : Identifiable {
 
 }

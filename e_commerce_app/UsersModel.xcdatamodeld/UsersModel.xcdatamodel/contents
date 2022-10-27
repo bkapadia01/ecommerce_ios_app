@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Order" representedClassName="Order" syncable="YES">
+    <entity name="Cart" representedClassName="Cart" syncable="YES">
         <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="orderStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="userId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product"/>
+    </entity>
+    <entity name="PaidOrder" representedClassName="PaidOrder" syncable="YES">
+        <attribute name="billTotal" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Product" representedClassName="Product" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String"/>
@@ -20,11 +23,12 @@
         <attribute name="password" attributeType="String"/>
         <attribute name="username" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Order"/>
+        <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart"/>
     </entity>
     <elements>
-        <element name="RegisteredUser" positionX="86.453125" positionY="201.95703125" width="128" height="133"/>
+        <element name="Cart" positionX="-162.7421875" positionY="371.5" width="128" height="89"/>
         <element name="Product" positionX="-488.96484375" positionY="223.45703125" width="128" height="133"/>
-        <element name="Order" positionX="-162.7421875" positionY="371.5" width="128" height="103"/>
+        <element name="RegisteredUser" positionX="86.453125" positionY="201.95703125" width="128" height="119"/>
+        <element name="PaidOrder" positionX="-279" positionY="324" width="128" height="44"/>
     </elements>
 </model>

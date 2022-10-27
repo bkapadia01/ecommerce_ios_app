@@ -1,5 +1,5 @@
 //
-//  Order+CoreDataClass.swift
+//  Cart+CoreDataClass.swift
 //  e_commerce_app
 //
 //  Created by Bhavin Kapadia on 2022-09-29.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(Order)
-public class Order: NSManagedObject {
+@objc(Cart)
+public class Cart: NSManagedObject {
 
 }
