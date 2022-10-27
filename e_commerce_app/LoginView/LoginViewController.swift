@@ -62,12 +62,23 @@ class LoginViewController: UIViewController {
             return HomeCollectionViewController(homeViewModel: homeViewModel, coder: coder)
             
         }) {
-            let mainNavbarController = UINavigationController(rootViewController: homeViewController)
+            let homeNavigationController = UINavigationController(rootViewController: homeViewController)
+            let cartNavigationController = UINavigationController(rootViewController: CartViewController())
             let mainTabBarController = UITabBarController()
             
-            mainTabBarController.setViewControllers([mainNavbarController], animated: true)
+            mainTabBarController.setViewControllers([homeNavigationController], animated: true)
             view.window?.rootViewController = mainTabBarController
             view.window?.makeKeyAndVisible()
+            
+            let homeTabBarItem = UITabBarItem(title: "HomeBoy", image: UIImage(systemName: "house"), selectedImage: nil)
+            homeViewController.tabBarItem = homeTabBarItem
+            
+            
+            let cartTabBarItem = UITabBarItem(title: "Carrrtzz", image: UIImage(systemName: "house.fill"), selectedImage: nil)
+            cartNavigationController.tabBarItem = cartTabBarItem
+
+            mainTabBarController.viewControllers = [homeNavigationController, cartNavigationController]
+            
         }
     }
 }

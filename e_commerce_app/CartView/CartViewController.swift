@@ -11,7 +11,10 @@ class CartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        navigationController.t/
+        view.backgroundColor = .white
 
+        navigationItem.title = "YELLOwww submarine"
         // Do any additional setup after loading the view.
     }
     

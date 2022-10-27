@@ -236,6 +236,21 @@
             </objects>
             <point key="canvasLocation" x="3944.6153846153843" y="62.559241706161131"/>
         </scene>
+        <!--Cart View Controller-->
+        <scene sceneID="wbp-Pw-fgM">
+            <objects>
+                <viewController storyboardIdentifier="CartViewController" id="v5O-DT-LXC" customClass="CartViewController" customModule="e_commerce_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8rC-QV-s9h">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="BAo-1A-c53"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t4b-i5-f9W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3994" y="-634"/>
+        </scene>
         <!--Register View Controller-->
         <scene sceneID="wDA-zc-KSS">
             <objects>
