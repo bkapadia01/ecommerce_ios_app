@@ -45,7 +45,7 @@ class HomeCollectionViewController: UICollectionViewController {
             }
         }
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedProduct = productItems[indexPath.item]
         
@@ -64,7 +64,7 @@ class HomeCollectionViewController: UICollectionViewController {
     }
     
     //completion, no returns , or returns something but in rare case compeltion and return something - need to understand completion in more detail
-        //review nibs/ xibs since thats what TB uses
+    //review nibs/ xibs since thats what TB uses
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

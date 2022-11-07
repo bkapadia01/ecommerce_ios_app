@@ -9,6 +9,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
+// NOT PART OF THIS PR
 class CartCollectionViewController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     init() {
@@ -23,7 +24,7 @@ class CartCollectionViewController : UICollectionViewController, UICollectionVie
         navigationItem.title = "Your Cart"
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize.init(width: view.frame.width, height: 250)
     }

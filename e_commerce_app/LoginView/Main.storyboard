@@ -183,13 +183,13 @@
                                     <constraint firstAttribute="height" constant="238" id="8VZ-NL-7gA"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1j-gE-40E" customClass="PaddingLabel" customModule="e_commerce_app" customModuleProvider="target">
-                                <rect key="frame" x="175" y="324" width="40" height="38"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1j-gE-40E">
+                                <rect key="frame" x="20" y="324" width="350" height="38"/>
                                 <color key="backgroundColor" systemColor="systemGray3Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="kVF-QN-Inf"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -200,42 +200,33 @@
                                         <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDU-gw-NhK" customClass="PaddingLabel" customModule="e_commerce_app" customModuleProvider="target">
-                                <rect key="frame" x="20" y="382" width="350" height="115.66666666666669"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDU-gw-NhK" customClass="PaddingLabel" customModule="e_commerce_app" customModuleProvider="target">
+                                <rect key="frame" x="20" y="382" width="350" height="19.333333333333314"/>
                                 <color key="backgroundColor" red="0.76862752440000004" green="0.83529412749999998" blue="0.8392156959" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIN-Xs-VCf">
-                                <rect key="frame" x="20" y="522.66666666666663" width="53" height="20.333333333333371"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="53" id="WCT-a9-cCd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="boS-uc-bpr">
                                 <rect key="frame" x="133" y="659" width="124" height="31"/>
@@ -246,7 +237,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FS5-D0-6Ye">
-                                <rect key="frame" x="250" y="523" width="120" height="20"/>
+                                <rect key="frame" x="164" y="621" width="62.333333333333343" height="20.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -255,24 +246,21 @@
                         <viewLayoutGuide key="safeArea" id="K4d-dd-7Ty"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="iIN-Xs-VCf" firstAttribute="leading" secondItem="PDU-gw-NhK" secondAttribute="leading" id="0TG-K3-WL7"/>
                             <constraint firstAttribute="bottom" secondItem="boS-uc-bpr" secondAttribute="bottom" constant="100" id="7cT-vA-BXz"/>
-                            <constraint firstItem="iIN-Xs-VCf" firstAttribute="baseline" secondItem="FS5-D0-6Ye" secondAttribute="baseline" id="90T-kg-j57"/>
-                            <constraint firstItem="K4d-dd-7Ty" firstAttribute="bottom" secondItem="iIN-Xs-VCf" secondAttribute="bottom" constant="247" id="APx-Zh-YKq"/>
                             <constraint firstItem="boS-uc-bpr" firstAttribute="leading" secondItem="K4d-dd-7Ty" secondAttribute="leading" constant="133" id="Cbm-Ep-fK2"/>
                             <constraint firstItem="JKT-8C-e8c" firstAttribute="top" secondItem="K4d-dd-7Ty" secondAttribute="top" constant="20" id="F6C-rg-bRF"/>
                             <constraint firstItem="K4d-dd-7Ty" firstAttribute="trailing" secondItem="PDU-gw-NhK" secondAttribute="trailing" constant="20" id="Hup-FL-UPi"/>
                             <constraint firstItem="PDU-gw-NhK" firstAttribute="leading" secondItem="K4d-dd-7Ty" secondAttribute="leading" constant="20" id="JaM-xL-40R"/>
                             <constraint firstItem="T1j-gE-40E" firstAttribute="centerX" secondItem="PDU-gw-NhK" secondAttribute="centerX" id="Rj0-Ab-CXC"/>
                             <constraint firstItem="boS-uc-bpr" firstAttribute="centerX" secondItem="AOp-fv-s2e" secondAttribute="centerX" id="Wza-8L-TSK"/>
-                            <constraint firstItem="FS5-D0-6Ye" firstAttribute="leading" secondItem="iIN-Xs-VCf" secondAttribute="trailing" constant="177" id="Xwa-Cf-lPx"/>
                             <constraint firstItem="PDU-gw-NhK" firstAttribute="top" secondItem="T1j-gE-40E" secondAttribute="bottom" constant="20" id="avs-o7-LCx"/>
+                            <constraint firstItem="T1j-gE-40E" firstAttribute="leading" secondItem="K4d-dd-7Ty" secondAttribute="leading" constant="20" id="bOC-16-v2d"/>
                             <constraint firstItem="T1j-gE-40E" firstAttribute="top" secondItem="JKT-8C-e8c" secondAttribute="bottom" constant="22" id="ddC-qM-H6g"/>
                             <constraint firstItem="JKT-8C-e8c" firstAttribute="centerX" secondItem="T1j-gE-40E" secondAttribute="centerX" id="gQx-0o-fHD"/>
-                            <constraint firstItem="iIN-Xs-VCf" firstAttribute="top" secondItem="PDU-gw-NhK" secondAttribute="bottom" constant="25" id="ghS-5t-CAb"/>
                             <constraint firstItem="JKT-8C-e8c" firstAttribute="leading" secondItem="AOp-fv-s2e" secondAttribute="leadingMargin" id="k1E-tU-jl2"/>
-                            <constraint firstItem="FS5-D0-6Ye" firstAttribute="top" secondItem="PDU-gw-NhK" secondAttribute="bottom" constant="25" id="q6M-Hl-B2J"/>
-                            <constraint firstItem="FS5-D0-6Ye" firstAttribute="trailing" secondItem="PDU-gw-NhK" secondAttribute="trailing" id="vNQ-4x-tGS"/>
+                            <constraint firstItem="boS-uc-bpr" firstAttribute="top" secondItem="FS5-D0-6Ye" secondAttribute="bottom" constant="17.666666666666629" id="r1v-Cx-tAW"/>
+                            <constraint firstItem="FS5-D0-6Ye" firstAttribute="trailing" secondItem="PDU-gw-NhK" secondAttribute="trailing" constant="-143.66666666666669" id="vNQ-4x-tGS"/>
+                            <constraint firstItem="K4d-dd-7Ty" firstAttribute="trailing" secondItem="T1j-gE-40E" secondAttribute="trailing" constant="20" id="y8o-32-LaU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vdH-Vk-18A"/>
@@ -437,14 +425,6 @@
             <point key="canvasLocation" x="928.98550724637687" y="89.732142857142847"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="PDU-gw-NhK">
-            <size key="intrinsicContentSize" width="37.333333333333336" height="18"/>
-        </designable>
-        <designable name="T1j-gE-40E">
-            <size key="intrinsicContentSize" width="40" height="18"/>
-        </designable>
-    </designables>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">

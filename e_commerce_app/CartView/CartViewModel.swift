@@ -8,6 +8,7 @@
 import CoreData
 import Foundation
 
+// NOT PART OF THIS PR
 class CartViewModel {
 //    func saveProduct(id: String, name: String, price: Double, quantity: Int, appDelegate: AppDelegate) throws {
 //        let products = [OrderItem(id: id, name: name, price: price, quantity: quantity)]

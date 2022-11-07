@@ -86,4 +86,32 @@ enum CoreDataService {
         }
         return loggedInUsername
     }
+    
+    static func saveProductToCart(userUUID: UUID, data: Data, appDelegate: AppDelegate) {
+        
+        do {
+            let registeredUser = try getRegisteredUser(userID: userUUID, appDelegate: appDelegate)
+            let cart = Cart(entity: NSEntityDescription.entity(forEntityName: "Cart", in: appDelegate.persistentContainer.viewContext)!, insertInto: appDelegate.persistentContainer.viewContext)
+            cart.products = data
+            cart.registeredUser = registeredUser
+        } catch {
+            print("Unable to get registered User data")
+        }
+
+    }
+    
+    static func getRegisteredUser(userID: UUID, appDelegate: AppDelegate) throws -> RegisteredUser {
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
+        let predicate = NSPredicate(format: "uuid == %@", userID as CVarArg)
+        fetchRequest.predicate = predicate
+        do {
+            guard let registeredUser = try context.fetch(fetchRequest).first else {
+                print("Username does not exists in database")
+                throw ValidationError.invalidCredentials.nsError
+            }
+            print("user found:\n \(registeredUser)")
+            return registeredUser
+        }
+    }
 }

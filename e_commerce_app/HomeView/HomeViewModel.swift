@@ -14,7 +14,7 @@ enum ResponseError: Error {
 
 final class HomeViewModel {
     var products: [Product] = []
-
+    
     let userID: UUID
     init(userID: UUID) {
         self.userID = userID
@@ -35,7 +35,7 @@ final class HomeViewModel {
         }
         
         let task = URLSession.shared.dataTask(with: URLRequest(url: urlAllProducts)) { data, response, error in
-
+            
             if let error = error {
                 completion(.failure(error))
                 return
