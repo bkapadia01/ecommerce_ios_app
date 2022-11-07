@@ -24,7 +24,7 @@ enum CoreDataService {
                 print("passwords does not match exiting user in database")
                 throw ValidationError.invalidCredentials.nsError
             }
-            return registeredUser.uuid
+            return registeredUser.uuid!
         }
     }
     
@@ -36,7 +36,7 @@ enum CoreDataService {
         do {
             let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
             let fetchResults = try context.fetch(fetchRequest)
-            return fetchResults.map{ $0.username }
+            return fetchResults.map{ $0.username! }
         } catch {
             print("Fetching Error: \(error)")
             return []
@@ -85,8 +85,5 @@ enum CoreDataService {
             print("Failed to fetch logged in username with given UUID")
         }
         return loggedInUsername
-
     }
-    
-    
 }

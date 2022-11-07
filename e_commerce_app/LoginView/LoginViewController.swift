@@ -63,22 +63,25 @@ class LoginViewController: UIViewController {
             
         }) {
             let homeNavigationController = UINavigationController(rootViewController: homeViewController)
-            let cartNavigationController = UINavigationController(rootViewController: CartViewController())
+            let cartNavigationController = UINavigationController(rootViewController: CartCollectionViewController())
+            let profileNavigationController = UINavigationController(rootViewController: ProfileViewController())
+
             let mainTabBarController = UITabBarController()
             
             mainTabBarController.setViewControllers([homeNavigationController], animated: true)
             view.window?.rootViewController = mainTabBarController
             view.window?.makeKeyAndVisible()
             
-            let homeTabBarItem = UITabBarItem(title: "HomeBoy", image: UIImage(systemName: "house"), selectedImage: nil)
+            let homeTabBarItem = UITabBarItem(title: "HomeBoy", image: UIImage(systemName: "house.fill"), selectedImage: nil)
             homeViewController.tabBarItem = homeTabBarItem
             
-            
-            let cartTabBarItem = UITabBarItem(title: "Carrrtzz", image: UIImage(systemName: "house.fill"), selectedImage: nil)
+            let cartTabBarItem = UITabBarItem(title: "Cart", image: UIImage(systemName: "cart.fill"), selectedImage: nil)
             cartNavigationController.tabBarItem = cartTabBarItem
-
-            mainTabBarController.viewControllers = [homeNavigationController, cartNavigationController]
             
+            let profileTabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), selectedImage: nil)
+            profileNavigationController.tabBarItem = profileTabBarItem
+            
+            mainTabBarController.viewControllers = [homeNavigationController, cartNavigationController, profileNavigationController]
         }
     }
 }

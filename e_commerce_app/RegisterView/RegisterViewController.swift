@@ -77,12 +77,10 @@ class RegisterViewController: UIViewController {
         let registrationSuccessAlert = UIAlertController(title: "Registration Successful",
                                                          message: "Registration was successful, please login with your credentials.",
                                                          preferredStyle: UIAlertController.Style.alert)
-        
         registrationSuccessAlert.addAction(UIAlertAction(title: "OK",
                                                          style: .default,
                                                          handler: { (action: UIAlertAction!)in self.transitionToLoginScreen()}
                                                         ))
-        
         present(registrationSuccessAlert, animated: true, completion: nil)
     }
     

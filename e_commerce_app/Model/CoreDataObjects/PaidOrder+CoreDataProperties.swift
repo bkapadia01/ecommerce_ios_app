@@ -2,7 +2,7 @@
 //  PaidOrder+CoreDataProperties.swift
 //  e_commerce_app
 //
-//  Created by Bhavin Kapadia on 2022-10-25.
+//  Created by Bhavin Kapadia on 2022-11-01.
 //
 //
 
@@ -16,7 +16,9 @@ extension PaidOrder {
         return NSFetchRequest<PaidOrder>(entityName: "PaidOrder")
     }
 
-    @NSManaged public var billTotal: Double
+    @NSManaged public var total: Double
+    @NSManaged public var products: Data?
+    @NSManaged public var registeredUser: RegisteredUser?
 
 }
 

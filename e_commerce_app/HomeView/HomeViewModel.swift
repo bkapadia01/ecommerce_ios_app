@@ -13,8 +13,9 @@ enum ResponseError: Error {
 }
 
 final class HomeViewModel {
+    var products: [Product] = []
+
     let userID: UUID
-    var products: [WelcomeElement] = []
     init(userID: UUID) {
         self.userID = userID
     }
@@ -26,7 +27,7 @@ final class HomeViewModel {
         return loggedInUsername
     }
     
-    func getAllProducts(completion: @escaping (Result<[WelcomeElement], Error>) -> Void) {
+    func getAllProducts(completion: @escaping (Result<[Product], Error>) -> Void) {
         
         guard let urlAllProducts = URL(string: "https://fakestoreapi.com/products") else {
             completion(.failure(ResponseError.unknownAPIResponse))
@@ -50,7 +51,7 @@ final class HomeViewModel {
             // convert data to models object
             do {
                 guard
-                    let resultJson = try JSONDecoder().decode([WelcomeElement]?.self, from: data)
+                    let resultJson = try JSONDecoder().decode([Product]?.self, from: data)
                 else {
                     completion(.failure(ResponseError.unknownAPIResponse)) // specificy json dedode error 
                     return

@@ -13,7 +13,7 @@ struct Constants {
         static let homeViewController = "HomeViewController"
         static let loginViewController = "LoginViewController"
         static let homeCollectionViewController = "HomeCollectionViewController"
-
+        static let itemDetailViewController = "ItemDetailViewController"
     }
     
 }

@@ -27,13 +27,11 @@ class RegisterViewModel {
         if usernames.contains(where: { $0 == username }) {
             return false
         }
-        
         return true
     }
     
     // return error string if validation is incorrect else throw error
     func validateRegistrationFields(firstName: String, lastName: String, username: String, password: String, repeatedPassword: String) throws {
-        
         do {
             guard !firstName.isEmpty &&
                     !lastName.isEmpty &&

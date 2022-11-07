@@ -13,7 +13,7 @@ private let reuseIdentifier = "ProductCell"
 class HomeCollectionViewController: UICollectionViewController {
     
     private let homeViewModel: HomeViewModel
-    private var productItems: [WelcomeElement] = []
+    private var productItems: [Product] = []
     private let reuseIdentifier = "ProductCell"
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
@@ -47,12 +47,25 @@ class HomeCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedItem = productItems[indexPath.item]
-        self.performSegue(withIdentifier: "segueToItemDetailView", sender: selectedItem)
+        let selectedProduct = productItems[indexPath.item]
+        
+        transitionToItemDetailVC(selectedProduct: selectedProduct)
     }
     
+    private func transitionToItemDetailVC(selectedProduct: Product) {
+        if let itemDetailViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.itemDetailViewController, creator: { coder in
+            let userID = self.homeViewModel.userID
+            
+            let itemDetailViewModel = ItemDetailViewModel(userID: userID, product: selectedProduct)
+            return ItemDetailViewController(itemDetailViewModel: itemDetailViewModel, coder: coder)
+        }) {
+            navigationController?.pushViewController(itemDetailViewController, animated: true)
+        }
+    }
+    
+    //completion, no returns , or returns something but in rare case compeltion and return something - need to understand completion in more detail
+        //review nibs/ xibs since thats what TB uses
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
@@ -68,41 +81,28 @@ class HomeCollectionViewController: UICollectionViewController {
         DispatchQueue.global().async {
             if let productImageURL = self.productItems[indexPath.item].image,
                let url = URL(string: productImageURL),
-               let data = try? Data(contentsOf: url) {
+               let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
                 DispatchQueue.main.async {
-                    cell.itemImageView.image = UIImage(data: data)  // try to reduce repeatetive code with the else portion
-                    cell.layer.borderColor = UIColor.gray.cgColor
-                    cell.layer.borderWidth = 1
-                    cell.itemLabel.text = productName
+                    self.collectionCellContent(cell: cell, image: image, productName: productName ?? "Missing Name")
                 }
             } else {
                 DispatchQueue.main.async {
-                    cell.itemImageView.image = UIImage(named: "missing_image")
-                    cell.layer.borderColor = UIColor.gray.cgColor
-                    cell.layer.borderWidth = 1
-                    cell.itemLabel.text = productName
+                    guard let missingImage = UIImage(named: "missing_image") else {
+                        return print("Unable to locate missing image file in assets")
+                    }
+                    self.collectionCellContent(cell: cell, image: missingImage, productName: productName ?? "Missing Name")
                 }
             }
         }
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let selectedItem = sender else {
-            return
-        }
-        
-        if segue.identifier == "segueToItemDetailView" {
-            guard let itemDetailVC = segue.destination as? ItemDetailViewController,
-                  let selectedIndexPath = self.collectionView.indexPathsForSelectedItems?.last?.row
-            else {
-                return
-            }
-            
-            itemDetailVC.selectedItem = productItems[selectedIndexPath]
-            print(productItems[selectedIndexPath].title ?? "") // For test purposes - remove on final code
-        }
+    func collectionCellContent(cell: HomeItemCollectionViewCell, image: UIImage, productName: String) {
+        cell.itemImageView.image = image
+        cell.layer.borderColor = UIColor.gray.cgColor
+        cell.layer.borderWidth = 1
+        cell.itemLabel.text = productName
     }
 }
 
