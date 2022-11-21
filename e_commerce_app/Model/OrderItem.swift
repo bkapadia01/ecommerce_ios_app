@@ -11,5 +11,5 @@ struct OrderItem: Codable {
     let id: Int
     let name: String
     let price: Double
-    let quantity: Int
+    let image: String
 }

@@ -57,6 +57,7 @@ enum CoreDataService {
             preconditionFailure("Unable to create UUID")
         }
         newUser.uuid = uuid
+        newUser.cart = createCartForNewUser(appDelegate: appDelegate)
         do {
             try context.save()
             print("Save Successfull")
@@ -64,6 +65,10 @@ enum CoreDataService {
         } catch let error as NSError{
             print("Saving Error: \(error)")
         }
+    }
+    
+    static func createCartForNewUser(appDelegate: AppDelegate) -> Cart {
+        return Cart(entity: NSEntityDescription.entity(forEntityName: "Cart", in: appDelegate.persistentContainer.viewContext)!, insertInto: appDelegate.persistentContainer.viewContext)
     }
     
     static func getLoggedInUsernameForUuid(userID: UUID, appDelegate: AppDelegate) -> String {
@@ -85,19 +90,6 @@ enum CoreDataService {
             print("Failed to fetch logged in username with given UUID")
         }
         return loggedInUsername
-    }
-    
-    static func saveProductToCart(userUUID: UUID, data: Data, appDelegate: AppDelegate) {
-        
-        do {
-            let registeredUser = try getRegisteredUser(userID: userUUID, appDelegate: appDelegate)
-            let cart = Cart(entity: NSEntityDescription.entity(forEntityName: "Cart", in: appDelegate.persistentContainer.viewContext)!, insertInto: appDelegate.persistentContainer.viewContext)
-            cart.products = data
-            cart.registeredUser = registeredUser
-        } catch {
-            print("Unable to get registered User data")
-        }
-
     }
     
     static func getRegisteredUser(userID: UUID, appDelegate: AppDelegate) throws -> RegisteredUser {

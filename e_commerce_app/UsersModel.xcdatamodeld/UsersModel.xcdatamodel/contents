@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Cart" representedClassName="Cart" syncable="YES">
-        <attribute name="products" optional="YES" attributeType="Binary"/>
+        <attribute name="orderItems" optional="YES" attributeType="Binary"/>
         <relationship name="registeredUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RegisteredUser" inverseName="cart" inverseEntity="RegisteredUser"/>
     </entity>
     <entity name="PaidOrder" representedClassName="PaidOrder" syncable="YES">
-        <attribute name="products" optional="YES" attributeType="Binary"/>
+        <attribute name="orderItems" optional="YES" attributeType="Binary"/>
         <attribute name="total" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="registeredUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RegisteredUser" inverseName="paidOrder" inverseEntity="RegisteredUser"/>
     </entity>

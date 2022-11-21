@@ -39,6 +39,8 @@ class ItemDetailViewController: UIViewController {
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
         self.itemDetailViewDescription.text = itemDetailViewModel.product.productDescription ?? ""
+        self.itemDetailViewDescription.numberOfLines = 10
+        self.itemDetailViewDescription.lineBreakMode = .byTruncatingTail
         self.itemDetailViewTitle.text = itemDetailViewModel.product.title ?? ""
         self.itemDetailViewItemPrice.text = "$ \(doubleItemPriceString)"
         self.navigationController?.navigationBar.topItem?.backButtonTitle = "Return Home"
@@ -58,9 +60,9 @@ class ItemDetailViewController: UIViewController {
     @IBAction func itemDetailViewAddItemToBag(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         itemDetailViewModel.productDetailToSaveToCart(appDelegate: appDelegate)
-        
+
         let itemAddedToCartAlert = UIAlertController(title: "Item added to cart!", message: "View item in cart to checkout", preferredStyle: UIAlertController.Style.alert)
-        itemAddedToCartAlert.addAction(UIAlertAction(title: "OK", style:.cancel, handler: nil))
+        itemAddedToCartAlert.addAction(UIAlertAction(title: "OK", style:.default, handler: nil))
         self.present(itemAddedToCartAlert, animated: true, completion: nil)
     }
 }

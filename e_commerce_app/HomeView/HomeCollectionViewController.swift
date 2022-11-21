@@ -7,9 +7,6 @@
 
 import UIKit
 
-private let reuseIdentifier = "ProductCell"
-
-
 class HomeCollectionViewController: UICollectionViewController {
     
     private let homeViewModel: HomeViewModel

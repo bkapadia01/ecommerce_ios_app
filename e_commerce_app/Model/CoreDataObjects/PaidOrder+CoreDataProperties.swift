@@ -17,7 +17,7 @@ extension PaidOrder {
     }
 
     @NSManaged public var total: Double
-    @NSManaged public var products: Data?
+    @NSManaged public var orderItems: Data?
     @NSManaged public var registeredUser: RegisteredUser?
 
 }

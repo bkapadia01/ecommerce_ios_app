@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
     }
     
     private func transitionToHomeScreen() {
-        if let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeCollectionViewController, creator: { coder in
+        guard let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeCollectionViewController, creator: { coder in
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
@@ -61,28 +61,50 @@ class LoginViewController: UIViewController {
             let homeViewModel = HomeViewModel(userID: userID)
             return HomeCollectionViewController(homeViewModel: homeViewModel, coder: coder)
             
-        }) {
-            let homeNavigationController = UINavigationController(rootViewController: homeViewController)
-            let cartNavigationController = UINavigationController(rootViewController: CartCollectionViewController())
-            let profileNavigationController = UINavigationController(rootViewController: ProfileViewController())
-            
-            let mainTabBarController = UITabBarController()
-            
-            mainTabBarController.setViewControllers([homeNavigationController], animated: true)
-            view.window?.rootViewController = mainTabBarController
-            view.window?.makeKeyAndVisible()
-            
-            let homeTabBarItem = UITabBarItem(title: "HomeBoy", image: UIImage(systemName: "house.fill"), selectedImage: nil)
-            homeViewController.tabBarItem = homeTabBarItem
-            
-            let cartTabBarItem = UITabBarItem(title: "Cart", image: UIImage(systemName: "cart.fill"), selectedImage: nil)
-            cartNavigationController.tabBarItem = cartTabBarItem
-            
-            let profileTabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), selectedImage: nil)
-            profileNavigationController.tabBarItem = profileTabBarItem
-            
-            mainTabBarController.viewControllers = [homeNavigationController, cartNavigationController, profileNavigationController]
+        }) else {
+            preconditionFailure("Tab view controller could not be setup")
         }
+        guard let cartCollectionViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.cartCollectionViewController, creator: { coder in
+            guard let userID = self.loginViewModel.userID else {
+                preconditionFailure("UserID not set")
+            }
+            let cartViewModel = CartViewModel(userID: userID)
+            return CartCollectionViewController(cartViewModel: cartViewModel, coder: coder)
+        }) else {
+            preconditionFailure("Tab view controller could not be setup")
+        }
+        
+        guard let profileViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.profileViewController, creator: { coder in
+            guard let userID = self.loginViewModel.userID else {
+                preconditionFailure("UserID not set")
+            }
+            let profileViewModel = ProfileViewModel(userID: userID)
+            return ProfileViewController(profileViwModel: profileViewModel, coder: coder)
+        }) else {
+            preconditionFailure("Tab view controller could not be setup")
+        }
+        
+        let homeNavigationController = UINavigationController(rootViewController: homeViewController)
+        let cartNavigationController = UINavigationController(rootViewController: cartCollectionViewController)
+        let profileNavigationController = UINavigationController(rootViewController: profileViewController)
+        
+        let mainTabBarController = UITabBarController()
+        
+        mainTabBarController.setViewControllers([homeNavigationController], animated: true)
+        view.window?.rootViewController = mainTabBarController
+        view.window?.makeKeyAndVisible()
+        
+        let homeTabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), selectedImage: nil)
+        homeViewController.tabBarItem = homeTabBarItem
+        
+        let cartTabBarItem = UITabBarItem(title: "Cart", image: UIImage(systemName: "cart.fill"), selectedImage: nil)
+        cartNavigationController.tabBarItem = cartTabBarItem
+        
+        let profileTabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), selectedImage: nil)
+        profileNavigationController.tabBarItem = profileTabBarItem
+        
+        mainTabBarController.viewControllers = [homeNavigationController, cartNavigationController, profileNavigationController]
+        
     }
 }
 

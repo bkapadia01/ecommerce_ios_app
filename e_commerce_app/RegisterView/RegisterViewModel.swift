@@ -17,7 +17,6 @@ class RegisterViewModel {
         CoreDataService.saveRegisteringUser(firstName: firstName, lastName: lastName, username: username, password: password, appDelegate: appDelegate)
     }
     
-    
     func isUsernameUnique(_ username: String) -> Bool {
         guard let  appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             preconditionFailure()
