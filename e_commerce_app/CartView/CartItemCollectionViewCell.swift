@@ -8,11 +8,15 @@
 import UIKit
 
 class CartItemCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var itemImageCell: UIImageView!
-    @IBOutlet weak var itemLabelCell: UILabel!
+    @IBOutlet weak var itemCellImage: UIImageView!
+    @IBOutlet weak var itemNameLabel: UILabel!
+    @IBOutlet weak var itemPriceLabel: UILabel!
     
     var deleteThisCell: (() -> Void)?
-       @IBAction func deleteItemPressed(_ sender: Any) {
+       @IBAction func deletePressed(_ sender: Any) {
           deleteThisCell?()
+           print("deletteee")
        }
+    
 }
+

@@ -6,8 +6,9 @@
     </entity>
     <entity name="PaidOrder" representedClassName="PaidOrder" syncable="YES">
         <attribute name="orderItems" optional="YES" attributeType="Binary"/>
+        <attribute name="paidDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="total" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="registeredUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RegisteredUser" inverseName="paidOrder" inverseEntity="RegisteredUser"/>
+        <relationship name="registeredUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RegisteredUser" inverseName="paidOrders" inverseEntity="RegisteredUser"/>
     </entity>
     <entity name="RegisteredUser" representedClassName="RegisteredUser" syncable="YES">
         <attribute name="firstName" attributeType="String"/>
@@ -16,11 +17,11 @@
         <attribute name="username" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="registeredUser" inverseEntity="Cart"/>
-        <relationship name="paidOrder" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PaidOrder" inverseName="registeredUser" inverseEntity="PaidOrder"/>
+        <relationship name="paidOrders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PaidOrder" inverseName="registeredUser" inverseEntity="PaidOrder"/>
     </entity>
     <elements>
         <element name="Cart" positionX="-162.7421875" positionY="371.5" width="128" height="59"/>
-        <element name="PaidOrder" positionX="376.71484375" positionY="362.7265625" width="128" height="74"/>
-        <element name="RegisteredUser" positionX="86.453125" positionY="201.95703125" width="128" height="148"/>
+        <element name="PaidOrder" positionX="376.71484375" positionY="362.7265625" width="128" height="89"/>
+        <element name="RegisteredUser" positionX="86.453125" positionY="201.95703125" width="128" height="134"/>
     </elements>
 </model>

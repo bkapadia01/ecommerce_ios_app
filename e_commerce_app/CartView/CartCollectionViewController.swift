@@ -23,6 +23,7 @@ class CartCollectionViewController : UICollectionViewController {
     private var matchingItemOrderCount: Int?
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    let emptyCartImage = UIImage(named: "emptyCartImage")
 
     init?(cartViewModel: CartViewModel, coder: NSCoder) {
         self.cartViewModel = cartViewModel
@@ -36,6 +37,7 @@ class CartCollectionViewController : UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
+
         orderItems = try? cartViewModel.getOrderItemsForLoggedInUser()
     }
 
@@ -43,30 +45,20 @@ class CartCollectionViewController : UICollectionViewController {
         super.viewDidLoad()
         navigationItem.title = "Your Cart"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Checkout", style: .plain, target: self, action: #selector(checkoutCartItems))
-//        for orderItemz in orderItems! {
-//            Dictionary(grouping: orderItemz, by: {orderItemz.id})
-//            print(orderItemz.id)
-//        }
-        let x = Dictionary(grouping: orderItems!, by: { $0.id })
-        print(x)
-
-//        var array: [Int: Int] = [:]
-//        for y in x {
-////            y.value.count
-//            let b = [y.key:y.value.count]
-//            print(b)
-////          print(y.key, y.value.count)
-//        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteSelectedItemsInCart))
     }
+    
+    @objc func deleteSelectedItemsInCart() {
+    }
+    
     @objc func checkoutCartItems() {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
         let checkOutItemsInCartAC = UIAlertController(title: "Checkout Items In Cart", message: "Would you like to checkout the items in cart? ", preferredStyle: UIAlertController.Style.alert)
         checkOutItemsInCartAC.addAction(UIAlertAction(title: "Checkout Items", style: .default, handler: { _ in
-            
             do {
                try self.cartViewModel.productDetailToSaveToCart(appDelegate: appDelegate)
+                self.collectionView.reloadData()
             } catch {
                 print("fail")
             }
@@ -74,30 +66,43 @@ class CartCollectionViewController : UICollectionViewController {
         checkOutItemsInCartAC.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil))
 
         self.present(checkOutItemsInCartAC, animated: true, completion: nil)
-        
-      
-    
     }
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         do {
             let orderItem = try cartViewModel.getOrderItemsForLoggedInUser()
             let orderItemCount = orderItem.count
-            return orderItemCount
+            if orderItemCount != 0 {
+                showEmptyCartImage(isHidden: true)
+                return orderItemCount
+            } else {
+                showEmptyCartImage(isHidden: false)
+                return 0
+            }
         } catch {
             return 0
         }
-        
+    }
+    
+    func showEmptyCartImage(isHidden: Bool) {
+        let imageView = UIImageView(image: emptyCartImage)
+        imageView.tag = 100
+        imageView.frame = CGRect(x: 0, y: 200, width: 400, height: 400)
+        if isHidden {
+            let viewWithTag = self.view.viewWithTag(100)
+            viewWithTag?.removeFromSuperview()
+        } else {
+            view.addSubview(imageView)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+       
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CartItemCollectionViewCell
-    
         let orderItem = orderItems?[indexPath.item]
         
         DispatchQueue.global().async {
@@ -119,12 +124,11 @@ class CartCollectionViewController : UICollectionViewController {
         return cell
     }
     
-    
     func collectionCellContent(cell: CartItemCollectionViewCell, image: UIImage, itemName: String) {
-        cell.itemImageCell.image = image
+        cell.itemCellImage.image = image
         cell.layer.borderColor = UIColor.gray.cgColor
         cell.layer.borderWidth = 1
-        cell.itemLabelCell.text = itemName
+        cell.itemNameLabel.text = itemName
     }
 }
 

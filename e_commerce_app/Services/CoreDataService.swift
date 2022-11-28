@@ -19,7 +19,6 @@ enum CoreDataService {
                 print("Username does not exists in database")
                 throw ValidationError.invalidCredentials.nsError
             }
-            print("user found:\n \(registeredUser)")
             if registeredUser.password != password {
                 print("passwords does not match exiting user in database")
                 throw ValidationError.invalidCredentials.nsError
@@ -102,8 +101,39 @@ enum CoreDataService {
                 print("Username does not exists in database")
                 throw ValidationError.invalidCredentials.nsError
             }
-            print("user found:\n \(registeredUser)")
             return registeredUser
         }
     }
+    
+    static func addPaidOrderForCartCheckoutItem(registeredUser: RegisteredUser, appDelegate: AppDelegate) {
+        let context = appDelegate.persistentContainer.viewContext
+        
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: "PaidOrder", in: context) else { return }
+        let paidOrderData = PaidOrder(entity: entityDescription, insertInto: context)
+        paidOrderData.registeredUser = registeredUser
+        paidOrderData.orderItems = registeredUser.cart?.orderItems
+        paidOrderData.total = 100.00 // create a seperate calculator service that spits out the total in the cart fun maths stuff
+        paidOrderData.paidDate = Date() //convert date object to readable date format for displaing in profile table
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+        }
+    }
+    
+    static func getPaidOrdersForUser(registeredUser: RegisteredUser, appDelegate: AppDelegate) throws -> [PaidOrder] {
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<PaidOrder> (entityName: "PaidOrder")
+        
+        let predicate = NSPredicate(format: "registeredUser == %@", registeredUser)
+        fetchRequest.predicate = predicate
+       
+        let paidOrders = try context.fetch(fetchRequest)
+        return paidOrders
+     
+    }
+    
+    
+    
 }

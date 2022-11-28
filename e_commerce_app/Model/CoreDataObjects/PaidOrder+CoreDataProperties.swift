@@ -19,7 +19,7 @@ extension PaidOrder {
     @NSManaged public var total: Double
     @NSManaged public var orderItems: Data?
     @NSManaged public var registeredUser: RegisteredUser?
-
+    @NSManaged public var paidDate: Date
 }
 
 extension PaidOrder : Identifiable {

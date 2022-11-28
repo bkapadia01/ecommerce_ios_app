@@ -22,7 +22,7 @@ extension RegisteredUser {
     @NSManaged public var username: String?
     @NSManaged public var uuid: UUID?
     @NSManaged public var cart: Cart?
-    @NSManaged public var paidOrder: NSSet?
+    @NSManaged public var paidOrders: [PaidOrder]?
 
 }
 
