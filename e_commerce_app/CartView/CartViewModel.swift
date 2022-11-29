@@ -23,8 +23,19 @@ class CartViewModel {
             return []
         }
         let decodedOrderItems = try JSONDecoder().decode([OrderItem].self, from: userOrderCartItems)
-//        print(decodedOrderItems)
         return decodedOrderItems
+    }
+    
+    func countOfOrderItemForUser() -> Int {
+        let countOfOrders: Int = 0
+        do {
+            let getOrderItems = try self.getOrderItemsForLoggedInUser()
+            return getOrderItems.count
+        } catch {
+            print(error)
+        }
+        
+        return countOfOrders
     }
     
     func getOrderItemsDataForLoggedInUser() throws -> Data? {
@@ -33,8 +44,6 @@ class CartViewModel {
         let userOrderItemsData = registeredUser.cart?.orderItems
         return userOrderItemsData
     }
-    
-    
     
     func checkoutCartOrderItemsToPaidOrder() throws {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

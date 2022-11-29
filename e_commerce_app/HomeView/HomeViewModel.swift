@@ -6,6 +6,10 @@
 //
 
 import UIKit
+struct ProductRenderableInfo {
+    let image: UIImage
+    let productTitle: String
+}
 
 enum ResponseError: Error {
     case unknownAPIResponse
@@ -18,6 +22,21 @@ final class HomeViewModel {
     let userID: UUID
     init(userID: UUID) {
         self.userID = userID
+    }
+    
+    func getProductInfo(at indexPath: IndexPath) -> ProductRenderableInfo {
+        let productAtIndexPath = products[indexPath.item]
+        guard let productImageURL = productAtIndexPath.image,
+              let url = URL(string: productImageURL),
+              let data = try? Data(contentsOf: url),
+              let productImage = UIImage(data: data)
+        else {
+            guard let missingImage = UIImage(named: "missing_image") else {
+                preconditionFailure()  // crash app for missing image(local)
+            }
+            return ProductRenderableInfo(image: missingImage, productTitle: productAtIndexPath.title ?? "Missing Title")
+        }
+        return ProductRenderableInfo(image: productImage, productTitle: productAtIndexPath.title ?? "Missing Title")
     }
     
     func getLoggedInUsername() -> String {

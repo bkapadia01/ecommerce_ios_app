@@ -74,22 +74,10 @@ class HomeCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! HomeItemCollectionViewCell
-        let productName = productItems[indexPath.item].title
         DispatchQueue.global().async {
-            if let productImageURL = self.productItems[indexPath.item].image,
-               let url = URL(string: productImageURL),
-               let data = try? Data(contentsOf: url),
-               let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.collectionCellContent(cell: cell, image: image, productName: productName ?? "Missing Name")
-                }
-            } else {
-                DispatchQueue.main.async {
-                    guard let missingImage = UIImage(named: "missing_image") else {
-                        return print("Unable to locate missing image file in assets")
-                    }
-                    self.collectionCellContent(cell: cell, image: missingImage, productName: productName ?? "Missing Name")
-                }
+            let productInfo = self.homeViewModel.getProductInfo(at: indexPath)
+            DispatchQueue.main.async {
+                self.collectionCellContent(cell: cell, image: productInfo.image, productName: productInfo.productTitle)
             }
         }
         return cell

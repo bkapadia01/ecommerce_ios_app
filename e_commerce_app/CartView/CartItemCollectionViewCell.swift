@@ -10,13 +10,11 @@ import UIKit
 class CartItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var itemCellImage: UIImageView!
     @IBOutlet weak var itemNameLabel: UILabel!
-    @IBOutlet weak var itemPriceLabel: UILabel!
+    @IBOutlet weak var deleteCartItem: UIImageView!
     
-    var deleteThisCell: (() -> Void)?
-       @IBAction func deletePressed(_ sender: Any) {
-          deleteThisCell?()
-           print("deletteee")
-       }
-    
+    override var isSelected: Bool {
+        didSet {
+            deleteCartItem.isHidden = !isSelected
+        }
+    }
 }
-

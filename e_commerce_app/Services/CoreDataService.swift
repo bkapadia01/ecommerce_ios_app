@@ -112,9 +112,7 @@ enum CoreDataService {
         let paidOrderData = PaidOrder(entity: entityDescription, insertInto: context)
         paidOrderData.registeredUser = registeredUser
         paidOrderData.orderItems = registeredUser.cart?.orderItems
-        paidOrderData.total = 100.00 // create a seperate calculator service that spits out the total in the cart fun maths stuff
-        paidOrderData.paidDate = Date() //convert date object to readable date format for displaing in profile table
-        
+        paidOrderData.paidDate = Date()
         do {
             try context.save()
         } catch {

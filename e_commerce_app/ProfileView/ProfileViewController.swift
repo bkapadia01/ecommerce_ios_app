@@ -54,7 +54,7 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController:  UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-       return "Purchased Items"
+       return "Order History"
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
