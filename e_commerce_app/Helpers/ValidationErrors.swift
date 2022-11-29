@@ -56,7 +56,7 @@ enum ValidationError: Error {
         case .passwordsDoNotMatch:
             return NSLocalizedString("The passwords do not match.", comment: "The 2 entered passwords do not match")
         case .usernameAlreadyExists:
-            return NSLocalizedString("Username already exists. Try another one or login instead.", comment: "Username already exits in the db")
+            return NSLocalizedString("Username already exists, try another.", comment: "Username already exits in the db")
         }
     }
 }

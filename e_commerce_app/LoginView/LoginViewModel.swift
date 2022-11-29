@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 final class LoginViewModel {
     var userID: UUID? = nil
@@ -24,24 +23,7 @@ final class LoginViewModel {
         }
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
-            let predicate = NSPredicate(format: "username == %@", username)
-            fetchRequest.predicate = predicate
-            do {
-                guard let registeredUser = try context.fetch(fetchRequest).first else {
-                    print("Username does not exists in database")
-                    throw ValidationError.invalidCredentials.nsError
-                }
-                print("user found:\n \(registeredUser)")
-                if registeredUser.password != password {
-                    print("passwords does not match exiting user in database")
-                    throw ValidationError.invalidCredentials.nsError
-                }
-                userID = registeredUser.uuid
-            } catch let error as NSError{
-                print("Fetching Error: \(error)")
-            }
+            userID = try CoreDataService.getRegisteredUserUUID(username: username, password: password, appDelegate: appDelegate)
         }
     }
 }

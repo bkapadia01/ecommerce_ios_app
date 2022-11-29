@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Order" representedClassName="Order" syncable="YES">
-        <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="orderStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="userId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product"/>
+    <entity name="Cart" representedClassName="Cart" syncable="YES">
+        <attribute name="orderItems" optional="YES" attributeType="Binary"/>
+        <relationship name="registeredUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RegisteredUser" inverseName="cart" inverseEntity="RegisteredUser"/>
     </entity>
-    <entity name="Product" representedClassName="Product" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="image" optional="YES" attributeType="String"/>
-        <attribute name="itemDescription" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="price" optional="YES" attributeType="String"/>
+    <entity name="PaidOrder" representedClassName="PaidOrder" syncable="YES">
+        <attribute name="orderItems" optional="YES" attributeType="Binary"/>
+        <attribute name="paidDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="total" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="registeredUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RegisteredUser" inverseName="paidOrders" inverseEntity="RegisteredUser"/>
     </entity>
     <entity name="RegisteredUser" representedClassName="RegisteredUser" syncable="YES">
         <attribute name="firstName" attributeType="String"/>
@@ -20,11 +16,12 @@
         <attribute name="password" attributeType="String"/>
         <attribute name="username" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Order"/>
+        <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="registeredUser" inverseEntity="Cart"/>
+        <relationship name="paidOrders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PaidOrder" inverseName="registeredUser" inverseEntity="PaidOrder"/>
     </entity>
     <elements>
-        <element name="RegisteredUser" positionX="86.453125" positionY="201.95703125" width="128" height="133"/>
-        <element name="Product" positionX="-488.96484375" positionY="223.45703125" width="128" height="133"/>
-        <element name="Order" positionX="-162.7421875" positionY="371.5" width="128" height="103"/>
+        <element name="Cart" positionX="-162.7421875" positionY="371.5" width="128" height="59"/>
+        <element name="PaidOrder" positionX="376.71484375" positionY="362.7265625" width="128" height="89"/>
+        <element name="RegisteredUser" positionX="86.453125" positionY="201.95703125" width="128" height="134"/>
     </elements>
 </model>
