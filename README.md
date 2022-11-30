@@ -31,10 +31,11 @@ The app is designed to respect the MVVM architecture model.
 ## Cart
 - In the cart view, the user can:
   - See all product added to the cart by the user with the name and image of each item
+  - view that the cart is empty when there are no items in the cart
   - Edit the cart and delete items from the cart
   - Checkout/Pay for all items in the cart
   
-<img src="https://user-images.githubusercontent.com/26723281/204707048-f377ba2a-a2a2-4655-a5e2-3fb575fd50d9.png" width="158">  <img src="https://user-images.githubusercontent.com/26723281/204708572-21bef965-ba7d-41ee-b973-8d3e7b642696.png" width="158">  <img src="https://user-images.githubusercontent.com/26723281/204708761-a55f9cc5-0270-4654-b5aa-e38263503eee.png" width="158"> 
+<img src="https://user-images.githubusercontent.com/26723281/204707048-f377ba2a-a2a2-4655-a5e2-3fb575fd50d9.png" width="158">  <img src="https://user-images.githubusercontent.com/26723281/204708572-21bef965-ba7d-41ee-b973-8d3e7b642696.png" width="158">  <img src="https://user-images.githubusercontent.com/26723281/204708761-a55f9cc5-0270-4654-b5aa-e38263503eee.png" width="158">  <img src="https://user-images.githubusercontent.com/26723281/204714451-f3ad80c5-3a3c-44e0-b2bb-d12edd90d509.png" width="158"> 
 
 ## Profile
 - In the profile view, the user can:
@@ -43,6 +44,7 @@ The app is designed to respect the MVVM architecture model.
   - option to logout from the app and return to login page
 
 <img src="https://user-images.githubusercontent.com/26723281/204707052-0d48ce35-710c-42b3-b897-9fc0b39dcbfb.png" width="158">  <img src="https://user-images.githubusercontent.com/26723281/204714115-f7af07b3-fef2-414f-b10f-c8d94ebe43be.png" width="158">
+
 
 ## Table Graph Model
 <img src="https://user-images.githubusercontent.com/26723281/204708907-bfae74fc-6254-4b9e-a447-1c31d2f69455.png" width="800">
