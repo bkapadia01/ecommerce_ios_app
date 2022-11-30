@@ -10,8 +10,7 @@ import UIKit
 class HomeCollectionViewController: UICollectionViewController {
     
     private let homeViewModel: HomeViewModel
-    private var productItems: [Product] = []
-    private let reuseIdentifier = "ProductCell"
+    private let reuseIdentifier = Constants.Stroyboard.productCellIdentifier
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
@@ -26,14 +25,13 @@ class HomeCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Welcome " + homeViewModel.getLoggedInUsername() + "!"
+        navigationItem.title = AppLocalizable.welcomeTitle.localized() + homeViewModel.getLoggedInUsername() + "!"
         
         homeViewModel.getAllProducts { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let products):
-                    self.productItems = products
-                    
+                    self.homeViewModel.productItems = products
                 case .failure(let error):
                     print(error)
                 }
@@ -44,8 +42,7 @@ class HomeCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedProduct = productItems[indexPath.item]
-        
+        let selectedProduct = homeViewModel.productItems[indexPath.item]
         transitionToItemDetailVC(selectedProduct: selectedProduct)
     }
     
@@ -60,15 +57,12 @@ class HomeCollectionViewController: UICollectionViewController {
         }
     }
     
-    //completion, no returns , or returns something but in rare case compeltion and return something - need to understand completion in more detail
-    //review nibs/ xibs since thats what TB uses
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return productItems.count
+        return homeViewModel.productItems.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -97,7 +91,6 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
-        
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     

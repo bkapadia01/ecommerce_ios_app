@@ -15,8 +15,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var paidOrderTableView: UITableView!
     
     private let profileViewModel: ProfileViewModel
-    private let reuseIdentifier = "ProfileCell"
-
+    private let reuseIdentifier = Constants.Stroyboard.profileCell
+    
     init?(profileViwModel: ProfileViewModel, coder: NSCoder) {
         self.profileViewModel = profileViwModel
         super.init(coder: coder)
@@ -41,20 +41,26 @@ class ProfileViewController: UIViewController {
         lastName.text = currentRegisteredUser?.lastName
         userName.text = currentRegisteredUser?.username
         view.backgroundColor = .white
-        navigationItem.title = "Profile"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
+        navigationItem.title = AppLocalizable.profile.localized()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: AppLocalizable.logout.localized(), style: .plain, target: self, action: #selector(logoutFromApp))
     }
     
-    @objc func logout() {
-        let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        loginVC.modalPresentationStyle = .fullScreen
-        present(loginVC, animated: false)
+    @objc func logoutFromApp() {
+        let logoutUserAC = UIAlertController(title: AppLocalizable.logout.localized(), message: AppLocalizable.wouldLogout.localized(), preferredStyle: UIAlertController.Style.alert)
+        logoutUserAC.addAction(UIAlertAction(title: AppLocalizable.agreeLogout.localized(), style: .default, handler: { _ in
+            let loginVC = UIStoryboard(name: Constants.Stroyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Stroyboard.loginViewController) as! LoginViewController
+            loginVC.modalPresentationStyle = .fullScreen
+            self.present(loginVC, animated: false)
+        }))
+        logoutUserAC.addAction(UIAlertAction(title: AppLocalizable.cancel.localized(), style:.cancel, handler: nil))
+        self.present(logoutUserAC, animated: true, completion: nil)
     }
 }
 
 extension ProfileViewController:  UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-       return "Order History"
+        return AppLocalizable.orderHistory.localized()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,17 +72,16 @@ extension ProfileViewController:  UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PaidOrdersCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.Stroyboard.paidOrderCell, for: indexPath)
         if profileViewModel.getCountOfPaidOrders() != 0 {
             let paidOrder = profileViewModel.getPaidOrderAtIndexPath(indexPath: indexPath)
             cell.textLabel?.text = paidOrder?.paidDate.formatted(date: .abbreviated, time: .complete)
             cell.detailTextLabel?.text =  "$" + String(profileViewModel.getTotalPaidOrderAtIndexPath(indexPath: indexPath) as Double)
             return cell
         } else {
-            cell.textLabel?.text = "No items purchased"
-            cell.detailTextLabel?.text =  ""
+            cell.textLabel?.text = AppLocalizable.noItemsPurchased.localized()
+            cell.detailTextLabel?.text = AppLocalizable.addItemsToPurchase.localized()
             return cell
         }
-
     }
 }

@@ -11,6 +11,10 @@ import UIKit
 
 class CartViewModel {
     let userID: UUID
+    var dictionaryIndexPathOfSelectedItem: [IndexPath: Bool] = [:]
+    var orderItems: [OrderItem]? = []
+    var products: [Product] = []
+
     init(userID: UUID) {
         self.userID = userID
     }
@@ -26,18 +30,6 @@ class CartViewModel {
         return decodedOrderItems
     }
     
-    func countOfOrderItemForUser() -> Int {
-        let countOfOrders: Int = 0
-        do {
-            let getOrderItems = try self.getOrderItemsForLoggedInUser()
-            return getOrderItems.count
-        } catch {
-            print(error)
-        }
-        
-        return countOfOrders
-    }
-    
     func getOrderItemsDataForLoggedInUser() throws -> Data? {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
@@ -49,7 +41,6 @@ class CartViewModel {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
-        let orderItems = try? self.getOrderItemsDataForLoggedInUser()
         CoreDataService.addPaidOrderForCartCheckoutItem(registeredUser: registeredUser, appDelegate: appDelegate)
         registeredUser.cart?.orderItems = nil
     }
@@ -61,8 +52,40 @@ class CartViewModel {
         do {
             try context.save()
         } catch {
-            print("Failed saving")
+            print(error)
         }
     }
     
+    func deleteSelectedItemsFromCart(appDelegate: AppDelegate) {
+        
+        do {
+            let registeredUser = try CoreDataService.getRegisteredUser(userID: self.userID, appDelegate: appDelegate)
+            for (indexPath, shouldDelete) in dictionaryIndexPathOfSelectedItem {
+                if shouldDelete {
+                    orderItems?.remove(at: indexPath.item)
+                }
+            }
+
+            registeredUser.cart?.orderItems = try JSONEncoder().encode(orderItems)
+            appDelegate.saveContext()
+            dictionaryIndexPathOfSelectedItem.removeAll()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getCartProductInfo(at indexPath: IndexPath) -> ProductRenderableInfo {
+        let orderItemAtIndexPath = self.orderItems?[indexPath.item]
+        guard let orderItemImageURL = orderItemAtIndexPath?.image,
+              let url = URL(string: orderItemImageURL),
+              let data = try? Data(contentsOf: url),
+              let productImage = UIImage(data: data)
+        else {
+            guard let missingImage = UIImage(named: Constants.FileName.missingImage) else {
+                preconditionFailure()
+            }
+            return ProductRenderableInfo(image: missingImage, productTitle: orderItemAtIndexPath?.name ?? AppLocalizable.missingName.localized())
+        }
+        return ProductRenderableInfo(image: productImage, productTitle: orderItemAtIndexPath?.name ?? AppLocalizable.missingName.localized())
+    }
 }

@@ -20,16 +20,12 @@ class CartCollectionViewController : UICollectionViewController {
     }
     
     private let cartViewModel: CartViewModel
-    private let reuseIdentifier = "CartItemCell"
-    private var orderItems: [OrderItem]? = []
-
+    private let reuseIdentifier = Constants.Stroyboard.cartItemCellIdentifier
     private var matchingItemOrderCount: Int?
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
-    let emptyCartImage = UIImage(named: "emptyCartImage")
-    var dictionaryIndexPathOfSelectedItem: [IndexPath: Bool] = [:]
-    
+    let emptyCartImage = UIImage(named: Constants.FileName.emptyCartImage)
     
     init?(cartViewModel: CartViewModel, coder: NSCoder) {
         self.cartViewModel = cartViewModel
@@ -44,19 +40,18 @@ class CartCollectionViewController : UICollectionViewController {
         didSet {
             switch currentMode {
             case .viewCart:
-                editBarButton.title = "Edit"
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Checkout", style: .plain, target: self, action: #selector(checkoutCartItems))
+                editBarButton.title = AppLocalizable.edit.localized()
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: AppLocalizable.checkOut.localized(), style: .plain, target: self, action: #selector(checkoutCartItems))
             case .editCart:
-                editBarButton.title = "Cancel"
+                editBarButton.title = AppLocalizable.cancel.localized()
                 navigationItem.rightBarButtonItem = deleteBarButton
                 collectionView.allowsMultipleSelection = true
             }
         }
     }
     
-    
     lazy var editBarButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(selectToEditItemsInCart(_:)))
+        let barButtonItem = UIBarButtonItem(title: AppLocalizable.edit.localized(), style: .plain, target: self, action: #selector(selectToEditItemsInCart(_:)))
         return barButtonItem
     }()
     
@@ -64,19 +59,19 @@ class CartCollectionViewController : UICollectionViewController {
         let deleteBarButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(selectDeleteItemsInCart(_:)))
         return deleteBarButton
     }()
-  
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
-        orderItems = try? cartViewModel.getOrderItemsForLoggedInUser()
+        cartViewModel.orderItems = try? cartViewModel.getOrderItemsForLoggedInUser()
         currentMode = .viewCart
         setupBarButtonItems()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Checkout", style: .plain, target: self, action: #selector(checkoutCartItems))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: AppLocalizable.checkOut.localized(), style: .plain, target: self, action: #selector(checkoutCartItems))
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Your Cart"
+        navigationItem.title = AppLocalizable.yourCart.localized()
         
     }
     
@@ -88,27 +83,9 @@ class CartCollectionViewController : UICollectionViewController {
     }
     
     @objc func selectDeleteItemsInCart(_ sender: UIBarButtonItem) {
-        var itemsToDeleteFromCart: [IndexPath] = []
-        //move logic to cartviewmodel
-
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        do {
-            let registeredUser = try CoreDataService.getRegisteredUser(userID: cartViewModel.userID, appDelegate: appDelegate)
-
-            for (indexPath, shouldDelete) in dictionaryIndexPathOfSelectedItem {
-                if shouldDelete {
-                    orderItems?.remove(at: indexPath.item)
-                }
-            }
-            
-            registeredUser.cart?.orderItems = try JSONEncoder().encode(orderItems)
-            appDelegate.saveContext()
-            dictionaryIndexPathOfSelectedItem.removeAll()
-            collectionView.reloadData()
-        } catch {
-            print(error)
-        }
-       
+        cartViewModel.deleteSelectedItemsFromCart(appDelegate: appDelegate)
+        collectionView.reloadData()
     }
     
     private func setupBarButtonItems() {
@@ -117,17 +94,16 @@ class CartCollectionViewController : UICollectionViewController {
     
     @objc func checkoutCartItems() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let checkOutItemsInCartAC = UIAlertController(title: "Checkout Items In Cart", message: "Would you like to checkout the items in cart? ", preferredStyle: UIAlertController.Style.alert)
-        checkOutItemsInCartAC.addAction(UIAlertAction(title: "Checkout Items", style: .default, handler: { _ in
+        let checkOutItemsInCartAC = UIAlertController(title: AppLocalizable.checkOutItemCart.localized(), message: AppLocalizable.wouldCheckoutItemsCart.localized(), preferredStyle: UIAlertController.Style.alert)
+        checkOutItemsInCartAC.addAction(UIAlertAction(title: AppLocalizable.checkOutItems.localized(), style: .default, handler: { _ in
             do {
-               try self.cartViewModel.productDetailToSaveToCart(appDelegate: appDelegate)
+                try self.cartViewModel.productDetailToSaveToCart(appDelegate: appDelegate)
                 self.collectionView.reloadData()
             } catch {
-                print("fail")
+                print(error)
             }
         }))
-        checkOutItemsInCartAC.addAction(UIAlertAction(title: "No", style:.cancel, handler: nil))
-
+        checkOutItemsInCartAC.addAction(UIAlertAction(title: AppLocalizable.cancel.localized(), style:.cancel, handler: nil))
         self.present(checkOutItemsInCartAC, animated: true, completion: nil)
     }
     
@@ -164,24 +140,13 @@ class CartCollectionViewController : UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CartItemCollectionViewCell
-        let orderItem = orderItems?[indexPath.item]
-        
-            if let orderItemImageURL =  URL(string: orderItem?.image ?? "missing_image"),
-               let data = try? Data(contentsOf: orderItemImageURL),
-               let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.collectionCellContent(cell: cell, image: image, itemName: orderItem?.name ?? "Missing Name")
-                }
-            } else {
-                DispatchQueue.main.async {
-                    guard let missingImage = UIImage(named: "missing_image") else {
-                        return print("Unable to locate missing image file in assets")
-                    }
-                    self.collectionCellContent(cell: cell, image: missingImage, itemName: orderItem?.name ?? "Missing Name")
-                }
+        DispatchQueue.global().async {
+            let productInfo = self.cartViewModel.getCartProductInfo(at: indexPath)
+            DispatchQueue.main.async {
+                self.collectionCellContent(cell: cell, image: productInfo.image, itemName: productInfo.productTitle)
             }
+        }
         return cell
     }
     
@@ -190,13 +155,13 @@ class CartCollectionViewController : UICollectionViewController {
         case .viewCart:
             collectionView.deselectItem(at: indexPath, animated: true)
         case .editCart:
-            dictionaryIndexPathOfSelectedItem[indexPath] = true
+            cartViewModel.dictionaryIndexPathOfSelectedItem[indexPath] = true
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if currentMode == .editCart {
-            dictionaryIndexPathOfSelectedItem[indexPath] = false
+            cartViewModel.dictionaryIndexPathOfSelectedItem[indexPath] = false
         }
     }
     
@@ -210,17 +175,16 @@ class CartCollectionViewController : UICollectionViewController {
 
 extension CartCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath ) -> CGSize {
-
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
-
+    
     func collectionView( _ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int ) -> UIEdgeInsets {
         return sectionInsets
     }
-
+    
     func collectionView( _ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int ) -> CGFloat {
         return sectionInsets.left
     }

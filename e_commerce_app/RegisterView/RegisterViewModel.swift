@@ -51,10 +51,10 @@ class RegisterViewModel {
             guard password == repeatedPassword else {
                 throw ValidationError.passwordsDoNotMatch.nsError
             }
-        
+            
             guard self.isUsernameUnique(username) == true else {
                 throw ValidationError.usernameAlreadyExists.nsError
             }
-        } 
+        }
     }
 }
