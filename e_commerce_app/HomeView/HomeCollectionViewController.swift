@@ -16,7 +16,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     init?(homeViewModel: HomeViewModel, coder: NSCoder) {
         self.homeViewModel = homeViewModel
-        super.init(coder: coder)
+        super.init(coder: coder) // <<<<
     }
     
     required init?(coder: NSCoder) {
@@ -47,10 +47,10 @@ class HomeCollectionViewController: UICollectionViewController {
     }
     
     private func transitionToItemDetailVC(selectedProduct: Product) {
-        if let itemDetailViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.itemDetailViewController, creator: { coder in
+        if let itemDetailViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.itemDetailViewController, creator: { coder in // <<<<
             let userID = self.homeViewModel.userID
-            
-            let itemDetailViewModel = ItemDetailViewModel(userID: userID, product: selectedProduct)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let itemDetailViewModel = ItemDetailViewModel(userID: userID, product: selectedProduct, appDelegate: appDelegate)
             return ItemDetailViewController(itemDetailViewModel: itemDetailViewModel, coder: coder)
         }) {
             navigationController?.pushViewController(itemDetailViewController, animated: true)

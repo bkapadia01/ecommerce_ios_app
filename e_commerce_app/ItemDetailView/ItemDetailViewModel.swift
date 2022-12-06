@@ -6,15 +6,16 @@
 //
 
 import Foundation
-import UIKit
 
 class ItemDetailViewModel {
     let product: Product
     let userID: UUID
+    let appDelegate: AppDelegate
     
-    init(userID: UUID, product: Product) {
+    init(userID: UUID, product: Product, appDelegate: AppDelegate) {
         self.userID = userID
         self.product = product
+        self.appDelegate = appDelegate
     }
     
     func productDetailToSaveToCart(appDelegate: AppDelegate) {
@@ -34,7 +35,6 @@ class ItemDetailViewModel {
     }
     
     func getOrderItemsForLoggedInUser() throws -> [OrderItem] {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         
         guard let userOrderItems = registeredUser.cart?.orderItems else {

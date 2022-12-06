@@ -83,8 +83,7 @@ class CartCollectionViewController : UICollectionViewController {
     }
     
     @objc func selectDeleteItemsInCart(_ sender: UIBarButtonItem) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        cartViewModel.deleteSelectedItemsFromCart(appDelegate: appDelegate)
+        cartViewModel.deleteSelectedItemsFromCart()
         collectionView.reloadData()
     }
     
@@ -93,11 +92,10 @@ class CartCollectionViewController : UICollectionViewController {
     }
     
     @objc func checkoutCartItems() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let checkOutItemsInCartAC = UIAlertController(title: AppLocalizable.checkOutItemCart.localized(), message: AppLocalizable.wouldCheckoutItemsCart.localized(), preferredStyle: UIAlertController.Style.alert)
         checkOutItemsInCartAC.addAction(UIAlertAction(title: AppLocalizable.checkOutItems.localized(), style: .default, handler: { _ in
             do {
-                try self.cartViewModel.productDetailToSaveToCart(appDelegate: appDelegate)
+                try self.cartViewModel.productDetailToSaveToCart()
                 self.collectionView.reloadData()
             } catch {
                 print(error)

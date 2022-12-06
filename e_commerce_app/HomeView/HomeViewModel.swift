@@ -20,8 +20,11 @@ final class HomeViewModel {
     var products: [Product] = []
     var productItems: [Product] = []
     let userID: UUID
-    init(userID: UUID) {
+    let appDelegate: AppDelegate
+    
+    init(userID: UUID, appDelegate: AppDelegate) {
         self.userID = userID
+        self.appDelegate = appDelegate
     }
     
     func getProductInfo(at indexPath: IndexPath) -> ProductRenderableInfo {

@@ -11,16 +11,17 @@ import UIKit
 
 class CartViewModel {
     let userID: UUID
+    let appDelegate: AppDelegate
     var dictionaryIndexPathOfSelectedItem: [IndexPath: Bool] = [:]
     var orderItems: [OrderItem]? = []
     var products: [Product] = []
-
-    init(userID: UUID) {
+    
+    init(userID: UUID, appDelegate: AppDelegate) {
         self.userID = userID
+        self.appDelegate = appDelegate
     }
     
     func getOrderItemsForLoggedInUser() throws -> [OrderItem] {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         
         guard let userOrderCartItems = registeredUser.cart?.orderItems else {
@@ -31,21 +32,18 @@ class CartViewModel {
     }
     
     func getOrderItemsDataForLoggedInUser() throws -> Data? {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         let userOrderItemsData = registeredUser.cart?.orderItems
         return userOrderItemsData
     }
     
     func checkoutCartOrderItemsToPaidOrder() throws {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         CoreDataService.addPaidOrderForCartCheckoutItem(registeredUser: registeredUser, appDelegate: appDelegate)
         registeredUser.cart?.orderItems = nil
     }
     
-    func productDetailToSaveToCart(appDelegate: AppDelegate) throws {
+    func productDetailToSaveToCart() throws {
         let context = appDelegate.persistentContainer.viewContext
 
         try? self.checkoutCartOrderItemsToPaidOrder()
@@ -56,7 +54,7 @@ class CartViewModel {
         }
     }
     
-    func deleteSelectedItemsFromCart(appDelegate: AppDelegate) {
+    func deleteSelectedItemsFromCart() {
         
         do {
             let registeredUser = try CoreDataService.getRegisteredUser(userID: self.userID, appDelegate: appDelegate)

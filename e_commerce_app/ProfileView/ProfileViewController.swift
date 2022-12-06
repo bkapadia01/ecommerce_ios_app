@@ -5,7 +5,6 @@
 //  Created by Bhavin Kapadia on 2022-11-01.
 //
 
-import Foundation
 import UIKit
 
 class ProfileViewController: UIViewController {
@@ -33,13 +32,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let currentRegisteredUser = try? profileViewModel.getRegisteredUser(appDelegate:appDelegate)
         paidOrderTableView.delegate = self
         paidOrderTableView.dataSource = self
-        firstName.text = currentRegisteredUser?.firstName
-        lastName.text = currentRegisteredUser?.lastName
-        userName.text = currentRegisteredUser?.username
+        let userInfo = profileViewModel.getUserProfileInfo()
+        firstName.text = userInfo.firstName
+        lastName.text = userInfo.lastName
+        userName.text = userInfo.userName
         view.backgroundColor = .white
         navigationItem.title = AppLocalizable.profile.localized()
         

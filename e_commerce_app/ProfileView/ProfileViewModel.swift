@@ -6,23 +6,34 @@
 //
 
 import Foundation
-import UIKit
 import CloudKit
+
+struct UserRenderableInfo {
+    let firstName: String
+    let lastName: String
+    let userName: String
+}
 
 class ProfileViewModel {
     
     let userID: UUID
-    init(userID: UUID) {
+    let appDelegate: AppDelegate
+    init(userID: UUID, appDelegate: AppDelegate) {
         self.userID = userID
+        self.appDelegate = appDelegate
     }
-    
-    func getRegisteredUser(appDelegate: AppDelegate) throws -> RegisteredUser {
+
+    func getRegisteredUser() throws -> RegisteredUser {
         let getRegisteredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         return getRegisteredUser
     }
     
+    func getUserProfileInfo() -> UserRenderableInfo {
+        let currentRegisteredUser = try? self.getRegisteredUser()
+        return UserRenderableInfo(firstName: currentRegisteredUser?.firstName ?? "", lastName: currentRegisteredUser?.lastName ?? "", userName: currentRegisteredUser?.username ?? "")
+    }
+    
     func getPaidOrderItems() throws -> [PaidOrder] {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         let userOrderPaidItems = try CoreDataService.getPaidOrdersForUser(registeredUser: registeredUser, appDelegate: appDelegate)
         return userOrderPaidItems

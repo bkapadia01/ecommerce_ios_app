@@ -8,8 +8,8 @@
 import Foundation
 
 
-struct Constants {
-    struct Stroyboard {
+enum Constants {
+    enum Stroyboard {
         static let main = "Main"
         static let homeViewController = "HomeViewController"
         static let loginViewController = "LoginViewController"
@@ -23,7 +23,7 @@ struct Constants {
         static let profileCell = "ProfileCell"
     }
     
-    struct FileName {
+    enum FileName {
         static let emptyCartImage = "emptyCartImage"
         static let missingImage = "missing_image"
     }
