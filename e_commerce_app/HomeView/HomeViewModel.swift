@@ -18,10 +18,13 @@ enum ResponseError: Error {
 
 final class HomeViewModel {
     var products: [Product] = []
-    
+    var productItems: [Product] = []
     let userID: UUID
-    init(userID: UUID) {
+    let appDelegate: AppDelegate
+    
+    init(userID: UUID, appDelegate: AppDelegate) {
         self.userID = userID
+        self.appDelegate = appDelegate
     }
     
     func getProductInfo(at indexPath: IndexPath) -> ProductRenderableInfo {
@@ -34,9 +37,9 @@ final class HomeViewModel {
             guard let missingImage = UIImage(named: "missing_image") else {
                 preconditionFailure()  // crash app for missing image(local)
             }
-            return ProductRenderableInfo(image: missingImage, productTitle: productAtIndexPath.title ?? "Missing Title")
+            return ProductRenderableInfo(image: missingImage, productTitle: productAtIndexPath.title ?? AppLocalizable.missingTitle.localized())
         }
-        return ProductRenderableInfo(image: productImage, productTitle: productAtIndexPath.title ?? "Missing Title")
+        return ProductRenderableInfo(image: productImage, productTitle: productAtIndexPath.title ?? AppLocalizable.missingTitle.localized())
     }
     
     func getLoggedInUsername() -> String {
@@ -59,7 +62,6 @@ final class HomeViewModel {
                 completion(.failure(error))
                 return
             }
-            // Validation
             guard
                 (response as? HTTPURLResponse) != nil,
                 let data = data
@@ -67,12 +69,11 @@ final class HomeViewModel {
                 completion(.failure(ResponseError.unknownAPIResponse))
                 return
             }
-            // convert data to models object
             do {
                 guard
                     let resultJson = try JSONDecoder().decode([Product]?.self, from: data)
                 else {
-                    completion(.failure(ResponseError.unknownAPIResponse)) // specificy json dedode error 
+                    completion(.failure(ResponseError.unknownAPIResponse))
                     return
                 }
                 self.products.insert(contentsOf: resultJson, at: 0)

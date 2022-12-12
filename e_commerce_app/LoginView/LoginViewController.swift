@@ -53,32 +53,39 @@ class LoginViewController: UIViewController {
     }
     
     private func transitionToHomeScreen() {
+        
+        // Home Tab
         guard let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeCollectionViewController, creator: { coder in
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
-            
-            let homeViewModel = HomeViewModel(userID: userID)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let homeViewModel = HomeViewModel(userID: userID, appDelegate: appDelegate)
             return HomeCollectionViewController(homeViewModel: homeViewModel, coder: coder)
             
         }) else {
             preconditionFailure("Tab view controller could not be setup")
         }
+        
+        // Cart Tab
         guard let cartCollectionViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.cartCollectionViewController, creator: { coder in
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
-            let cartViewModel = CartViewModel(userID: userID)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let cartViewModel = CartViewModel(userID: userID, appDelegate: appDelegate)
             return CartCollectionViewController(cartViewModel: cartViewModel, coder: coder)
         }) else {
             preconditionFailure("Tab view controller could not be setup")
         }
         
+        // Profile tab
         guard let profileViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.profileViewController, creator: { coder in
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
-            let profileViewModel = ProfileViewModel(userID: userID)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let profileViewModel = ProfileViewModel(userID: userID, appDelegate: appDelegate)
             return ProfileViewController(profileViwModel: profileViewModel, coder: coder)
         }) else {
             preconditionFailure("Tab view controller could not be setup")

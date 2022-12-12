@@ -21,7 +21,7 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerErrorLabel.alpha = 0 // hide error label
-//        registerViewModel.fetchRegisteredUsers()
+        //        registerViewModel.fetchRegisteredUsers()
     }
     
     @IBAction func cancelRegistrationTapped(_ sender: Any) {
@@ -30,35 +30,30 @@ class RegisterViewController: UIViewController {
     
     @IBAction func signUpButtonTapped(_ sender: Any) {
         guard let firstNameEnteredTextfield = firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing last name field")
             return
         }
         
         guard let lastNameEnteredTextfield = lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing last name field")
             return
         }
         guard let usernameEnteredTextfield = userNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing last name field")
             return
         }
         guard let passwordEnteredTextfield = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing last name field")
             return
         }
         guard let repeatedPasswordEnteredTextfield =  repeatPasswordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing last name field")
             return
         }
         
         do {
             try registerViewModel.validateRegistrationFields(firstName: firstNameEnteredTextfield, lastName: lastNameEnteredTextfield, username: usernameEnteredTextfield, password: passwordEnteredTextfield, repeatedPassword: repeatedPasswordEnteredTextfield)
             
-                registerViewModel.saveRegisteredUser(firstName: firstNameEnteredTextfield,
-                                                     lastName: lastNameEnteredTextfield,
-                                                     username: usernameEnteredTextfield,
-                                                     password: passwordEnteredTextfield)
-                self.registrationSuccessfulAlert()
+            registerViewModel.saveRegisteredUser(firstName: firstNameEnteredTextfield,
+                                                 lastName: lastNameEnteredTextfield,
+                                                 username: usernameEnteredTextfield,
+                                                 password: passwordEnteredTextfield)
+            self.registrationSuccessfulAlert()
         } catch {
             showErrorMessaage(error.localizedDescription)
         }

@@ -37,13 +37,13 @@ class ItemDetailViewController: UIViewController {
         let itemPrice = itemDetailViewModel.product.price ?? 0.00 as Double
         let doubleItemPriceString = String(format: "%.2f", itemPrice)
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: AppLocalizable.cancel.localized(), style: .plain, target: nil, action: nil)
         self.itemDetailViewDescription.text = itemDetailViewModel.product.productDescription ?? ""
         self.itemDetailViewDescription.numberOfLines = 10
         self.itemDetailViewDescription.lineBreakMode = .byTruncatingTail
         self.itemDetailViewTitle.text = itemDetailViewModel.product.title ?? ""
         self.itemDetailViewItemPrice.text = "$ \(doubleItemPriceString)"
-        self.navigationController?.navigationBar.topItem?.backButtonTitle = "Return Home"
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = AppLocalizable.returnHome.localized()
         
         if let productImageURL = itemDetailViewModel.product.image{
             let url = URL(string: productImageURL)
@@ -59,10 +59,10 @@ class ItemDetailViewController: UIViewController {
     
     @IBAction func itemDetailViewAddItemToBag(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        itemDetailViewModel.productDetailToSaveToCart(appDelegate: appDelegate)
-
-        let itemAddedToCartAlert = UIAlertController(title: "Item added to cart!", message: "View item in cart to checkout", preferredStyle: UIAlertController.Style.alert)
-        itemAddedToCartAlert.addAction(UIAlertAction(title: "OK", style:.default, handler: nil))
+        itemDetailViewModel.productDetailToSaveToCart(appDelegate: appDelegate) //<<<
+        let itemAddedToCartAlert = UIAlertController(title: AppLocalizable.itemAddedToCart.localized(), message: AppLocalizable.viewItemInCart.localized(), preferredStyle: UIAlertController.Style.alert)
+        itemAddedToCartAlert.addAction(UIAlertAction(title: AppLocalizable.ok.localized(), style:.default, handler: nil))
+        
         self.present(itemAddedToCartAlert, animated: true, completion: nil)
     }
 }

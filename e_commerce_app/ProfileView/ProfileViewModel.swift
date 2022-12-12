@@ -6,32 +6,40 @@
 //
 
 import Foundation
-import UIKit
 import CloudKit
+
+struct UserRenderableInfo {
+    let firstName: String
+    let lastName: String
+    let userName: String
+}
 
 class ProfileViewModel {
     
     let userID: UUID
-    init(userID: UUID) {
+    let appDelegate: AppDelegate
+    init(userID: UUID, appDelegate: AppDelegate) {
         self.userID = userID
+        self.appDelegate = appDelegate
     }
-    
-    func getRegisteredUser(appDelegate: AppDelegate) throws -> RegisteredUser {
-        
+
+    func getRegisteredUser() throws -> RegisteredUser {
         let getRegisteredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         return getRegisteredUser
     }
     
+    func getUserProfileInfo() -> UserRenderableInfo {
+        let currentRegisteredUser = try? self.getRegisteredUser()
+        return UserRenderableInfo(firstName: currentRegisteredUser?.firstName ?? "", lastName: currentRegisteredUser?.lastName ?? "", userName: currentRegisteredUser?.username ?? "")
+    }
+    
     func getPaidOrderItems() throws -> [PaidOrder] {
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
         let userOrderPaidItems = try CoreDataService.getPaidOrdersForUser(registeredUser: registeredUser, appDelegate: appDelegate)
         return userOrderPaidItems
     }
     
     func getCountOfPaidOrders() -> Int {
-        
         do {
             let paidOrders = try self.getPaidOrderItems()
             return paidOrders.count
@@ -42,7 +50,6 @@ class ProfileViewModel {
     }
     
     func getPaidOrderAtIndexPath(indexPath: IndexPath) -> PaidOrder? {
-        
         do {
             let paidOrders = try self.getPaidOrderItems()
             return paidOrders[indexPath.row]
@@ -53,11 +60,10 @@ class ProfileViewModel {
     }
     
     func getTotalPaidOrderAtIndexPath(indexPath: IndexPath) -> Double {
-        
         do {
             let paidOrders = try self.getPaidOrderItems()
             guard let paidOrderAtIndexPath = paidOrders[indexPath.row].orderItems else {
-                return 0
+                return 0.0
             }
             let orderItems = try JSONDecoder().decode([OrderItem].self, from: paidOrderAtIndexPath)
             var total: Double = 0.0
@@ -68,6 +74,6 @@ class ProfileViewModel {
         } catch {
             print(error)
         }
-        return 0
+        return 0.0
     }
 }

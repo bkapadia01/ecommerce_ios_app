@@ -18,7 +18,7 @@ enum ValidationError: Error {
     case passwordLengthTooShort
     case passwordsDoNotMatch
     case usernameAlreadyExists
-
+    
     var nsError: NSError {
         return NSError(domain: "", code: code, userInfo: [NSLocalizedDescriptionKey:errorDescription])
     }

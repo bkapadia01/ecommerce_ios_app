@@ -20,7 +20,7 @@ enum CoreDataService {
                 throw ValidationError.invalidCredentials.nsError
             }
             if registeredUser.password != password {
-                print("passwords does not match exiting user in database")
+                print("Passwords does not match exiting user in database")
                 throw ValidationError.invalidCredentials.nsError
             }
             return registeredUser.uuid!
@@ -86,7 +86,7 @@ enum CoreDataService {
                 loggedInUsername = data.value(forKey: "username") as! String
             }
         } catch {
-            print("Failed to fetch logged in username with given UUID")
+            print("Failed to fetch logged in username with given UUID - \(error)")
         }
         return loggedInUsername
     }
@@ -116,7 +116,7 @@ enum CoreDataService {
         do {
             try context.save()
         } catch {
-            print("Failed saving")
+            print("Failed saving - \(error)")
         }
     }
     
