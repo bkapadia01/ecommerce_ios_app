@@ -9,8 +9,6 @@ import Foundation
 
 extension String {
     func localized() -> String{
-        var fileName = String()
-        fileName = "WeatherLocalizable"
-        return NSLocalizedString(self, tableName: fileName, bundle: Bundle.main, value: String(), comment: String())
+        return NSLocalizedString(self, bundle: Bundle.main, value: String(), comment: String())
     }
 }
