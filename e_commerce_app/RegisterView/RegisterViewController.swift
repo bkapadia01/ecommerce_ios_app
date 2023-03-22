@@ -55,11 +55,11 @@ class RegisterViewController: UIViewController {
                                                  password: passwordEnteredTextfield)
             self.registrationSuccessfulAlert()
         } catch {
-            showErrorMessaage(error.localizedDescription)
+            showErrorMessage(error.localizedDescription)
         }
     }
     
-    private func showErrorMessaage(_ message: String) {
+    private func showErrorMessage(_ message: String) {
         registerErrorLabel.text = message
         registerErrorLabel.alpha = 1
     }
@@ -69,6 +69,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func registrationSuccessfulAlert() {
+        showErrorMessage("")
         let registrationSuccessAlert = UIAlertController(title: "Registration Successful",
                                                          message: "Registration was successful, please login with your credentials.",
                                                          preferredStyle: UIAlertController.Style.alert)
