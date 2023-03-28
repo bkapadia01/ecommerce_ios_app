@@ -41,6 +41,7 @@ class LoginViewController: UIViewController {
         do {
 //            try loginViewModel.validateCredentials(username: loginUsername, password: loginPassword)
             try loginViewModel.validateCredentialUsingKeychain(username: loginUsername, password: loginPassword)
+            //set userID from viewmodel
             transitionToHomeScreen()
         } catch {
             showErrorMessaage(error.localizedDescription)

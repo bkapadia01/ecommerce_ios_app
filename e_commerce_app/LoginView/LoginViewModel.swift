@@ -17,7 +17,7 @@ enum KeychainError: Error {
 
 final class LoginViewModel {
     var userID: UUID? = nil
-    
+//
 //    func validateCredentials(username: String, password: String) throws {
 //
 //        guard !username.isEmpty || !password.isEmpty else {
@@ -35,7 +35,7 @@ final class LoginViewModel {
 //        }
 //    }
     
-    func validateCredentialUsingKeychain(username: String, password: String)  throws -> Bool {
+    func validateCredentialUsingKeychain(username: String, password: String)  throws  {
         let service = "e-commerce app"
 
         guard !username.isEmpty || !password.isEmpty else {
@@ -53,7 +53,7 @@ final class LoginViewModel {
         
         // Set up a Keychain query dictionary to use for all Keychain operations
         var query: [String: Any] = [:]
-        query[kSecClass as String] = kSecClassInternetPassword
+        query[kSecClass as String] = kSecClassGenericPassword
         query[kSecAttrService as String] = service
         query[kSecAttrAccount as String] = account
         
@@ -76,10 +76,14 @@ final class LoginViewModel {
                   throw KeychainError.failedToAddItem(status: status)
               }
           default:
+              print("Error: \(status)")
               throw KeychainError.unexpectedError(status: status)
           }
-          
-          // Return true if the Keychain operation was successful
-          return true
+        
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                       userID = try CoreDataService.getRegisteredUserUUID(username: username, password: password, appDelegate: appDelegate)
+           }
     }
+    
+    
 }
