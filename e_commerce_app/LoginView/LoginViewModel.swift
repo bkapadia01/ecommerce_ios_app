@@ -17,7 +17,7 @@ enum KeychainError: Error {
 
 final class LoginViewModel {
     var userID: UUID? = nil
-
+    var decodedPassword: String? = nil
     
     func getPassword(username: String) throws {
         do {
@@ -25,14 +25,17 @@ final class LoginViewModel {
                 print("Failed to get data")
                 return
             }
-            let password = String(decoding: data, as: UTF8.self)
-            print("read password: \(password)")
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                userID = try CoreDataService.getRegisteredUserUUID(username: username, appDelegate: appDelegate)
-            }
+            let decodedPassword = String(decoding: data, as: UTF8.self)
+            print("read password: \(decodedPassword)")
         } catch {
             print(error)
             throw error
         }
+    }
+    
+    func loginAccountUserID(username: String, decodedPassword: String) throws {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                userID = try CoreDataService.getRegisteredUserUUID(username: username, decodedPassword: decodedPassword, appDelegate: appDelegate)
+            }
     }
 }

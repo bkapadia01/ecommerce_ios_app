@@ -8,7 +8,7 @@
 import CoreData
 
 enum CoreDataService {
-    static func getRegisteredUserUUID(username: String, appDelegate: AppDelegate) throws -> UUID {
+    static func getRegisteredUserUUID(username: String, decodedPassword: String, appDelegate: AppDelegate) throws -> UUID {
         
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
@@ -17,6 +17,11 @@ enum CoreDataService {
         do {
             guard let registeredUser = try context.fetch(fetchRequest).first else {
                 print("Username does not exists in database")
+                throw ValidationError.invalidCredentials.nsError
+            }
+            
+            if registeredUser.password != decodedPassword {
+                print("Passwords does not match exiting user in database")
                 throw ValidationError.invalidCredentials.nsError
             }
            
