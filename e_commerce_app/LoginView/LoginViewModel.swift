@@ -17,73 +17,22 @@ enum KeychainError: Error {
 
 final class LoginViewModel {
     var userID: UUID? = nil
-//
-//    func validateCredentials(username: String, password: String) throws {
-//
-//        guard !username.isEmpty || !password.isEmpty else {
-//            throw ValidationError.missingUsernamePassword.nsError
-//        }
-//        guard !username.isEmpty else {
-//            throw ValidationError.missingUsername.nsError
-//        }
-//        guard !password.isEmpty else {
-//            throw ValidationError.missingPassword.nsError
-//        }
-//
-//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//            userID = try CoreDataService.getRegisteredUserUUID(username: username, password: password, appDelegate: appDelegate)
-//        }
-//    }
+
     
-    func validateCredentialUsingKeychain(username: String, password: String)  throws  {
-        let service = "e-commerce app"
-
-        guard !username.isEmpty || !password.isEmpty else {
-            throw ValidationError.missingUsernamePassword.nsError
-        }
-        guard !username.isEmpty else {
-            throw ValidationError.missingUsername.nsError
-        }
-        guard !password.isEmpty else {
-            throw ValidationError.missingPassword.nsError
-        }
-
-        let account = username
-        let passwordData = password.data(using: .utf8)!
-        
-        // Set up a Keychain query dictionary to use for all Keychain operations
-        var query: [String: Any] = [:]
-        query[kSecClass as String] = kSecClassGenericPassword
-        query[kSecAttrService as String] = service
-        query[kSecAttrAccount as String] = account
-        
-        // Check if a password already exists in Keychain for the given username
-          var status = SecItemCopyMatching(query as CFDictionary, nil)
-          switch status {
-          case errSecSuccess:
-              // If a password already exists, update it with the new one
-              var attributesToUpdate: [String: Any] = [:]
-              attributesToUpdate[kSecValueData as String] = passwordData
-              status = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
-              if status != errSecSuccess {
-                  throw KeychainError.failedToUpdateItem(status: status)
-              }
-          case errSecItemNotFound:
-              // If a password doesn't exist, create a new Keychain item for the user
-              query[kSecValueData as String] = passwordData
-              status = SecItemAdd(query as CFDictionary, nil)
-              if status != errSecSuccess {
-                  throw KeychainError.failedToAddItem(status: status)
-              }
-          default:
-              print("Error: \(status)")
-              throw KeychainError.unexpectedError(status: status)
-          }
-        
+    func getPassword(username: String) throws {
+        do {
+            guard let data = try KeyChainService.get(username: username) else {
+                print("Failed to get data")
+                return
+            }
+            let password = String(decoding: data, as: UTF8.self)
+            print("read password: \(password)")
             if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                       userID = try CoreDataService.getRegisteredUserUUID(username: username, password: password, appDelegate: appDelegate)
-           }
+                userID = try CoreDataService.getRegisteredUserUUID(username: username, appDelegate: appDelegate)
+            }
+        } catch {
+            print(error)
+            throw error
+        }
     }
-    
-    
 }

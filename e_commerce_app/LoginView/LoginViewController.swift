@@ -33,14 +33,10 @@ class LoginViewController: UIViewController {
             print("Error parsing username field")
             return
         }
-        guard let loginPassword = loginPasswordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing password field")
-            return
-        }
-        
         do {
 //            try loginViewModel.validateCredentials(username: loginUsername, password: loginPassword)
-            try loginViewModel.validateCredentialUsingKeychain(username: loginUsername, password: loginPassword)
+//            try loginViewModel.validateCredentialUsingKeychain(username: loginUsername, password: loginPassword)
+            try loginViewModel.getPassword(username: loginUsername)
             //set userID from viewmodel
             transitionToHomeScreen()
         } catch {

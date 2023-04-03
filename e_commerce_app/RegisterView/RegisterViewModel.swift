@@ -14,7 +14,7 @@ class RegisterViewModel {
             preconditionFailure()
         }
         
-        CoreDataService.saveRegisteringUser(firstName: firstName, lastName: lastName, username: username, password: password, appDelegate: appDelegate)
+        CoreDataService.saveRegisteringUser(firstName: firstName, lastName: lastName, username: username, appDelegate: appDelegate)
     }
     
     func isUsernameUnique(_ username: String) -> Bool {
@@ -55,6 +55,7 @@ class RegisterViewModel {
             guard self.isUsernameUnique(username) == true else {
                 throw ValidationError.usernameAlreadyExists.nsError
             }
+            try KeyChainService.save(username: username, password: password)
         }
     }
 }
