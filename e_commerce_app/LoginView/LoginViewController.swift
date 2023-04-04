@@ -12,7 +12,6 @@ class LoginViewController: UIViewController {
         case missingUsernameField
         case missingPasswordField
         case invalidCredentials
-        case unknown(OSStatus)
     }
     
     @IBOutlet weak var loginImageIcon: UIImageView!
@@ -25,8 +24,12 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginImageIcon.image = UIImage(named: "homeShoppingArt")
+        self.hideErrorMessaage()
         setDelegates()
-        loginErrorLabel?.alpha = 0 // hide error label on launch
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.hideErrorMessaage()
     }
     
     private func setDelegates() {

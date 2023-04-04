@@ -99,7 +99,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1839.1304347826087" y="89.732142857142847"/>
+            <point key="canvasLocation" x="1838.4615384615383" y="89.5734597156398"/>
         </scene>
         <!--HomeCollectionViewController-->
         <scene sceneID="K4O-G5-TjT">
@@ -468,7 +468,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="TEi-hK-dZe">
-                                <rect key="frame" x="40" y="104.66666666666669" width="310" height="399.00000000000006"/>
+                                <rect key="frame" x="40" y="104.66666666666669" width="310" height="399"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="YDs-1F-lBq">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
