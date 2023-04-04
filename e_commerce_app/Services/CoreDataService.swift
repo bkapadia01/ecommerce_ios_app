@@ -8,7 +8,12 @@
 import CoreData
 
 enum CoreDataService {
-    static func getRegisteredUserUUID(username: String, decodedPassword: String, appDelegate: AppDelegate) throws -> UUID {
+    //remove injection app delegate everywehre and persistent continaer
+    // core data service will already have the context within it so you dont need the "persistentContainer.viewcontexT" paramater
+    
+    // finish the keychain work first and then move on this
+    
+    static func getRegisteredUserUUID(username: String, appDelegate: AppDelegate) throws -> UUID {
         
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
@@ -20,10 +25,10 @@ enum CoreDataService {
                 throw ValidationError.invalidCredentials.nsError
             }
             
-            if registeredUser.password != decodedPassword {
-                print("Passwords does not match exiting user in database")
-                throw ValidationError.invalidCredentials.nsError
-            }
+//            if registeredUser.password != decodedPassword {
+//                print("Passwords does not match exiting user in database")
+//                throw ValidationError.invalidCredentials.nsError
+//            }
            
             return registeredUser.uuid!
         }

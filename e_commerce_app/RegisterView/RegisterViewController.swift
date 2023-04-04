@@ -21,7 +21,6 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerErrorLabel.alpha = 0 // hide error label
-        //        registerViewModel.fetchRegisteredUsers()
     }
     
     @IBAction func cancelRegistrationTapped(_ sender: Any) {
@@ -69,7 +68,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func registrationSuccessfulAlert() {
-        showErrorMessage("")
+        registerErrorLabel.alpha = 0 
         let registrationSuccessAlert = UIAlertController(title: "Registration Successful",
                                                          message: "Registration was successful, please login with your credentials.",
                                                          preferredStyle: UIAlertController.Style.alert)

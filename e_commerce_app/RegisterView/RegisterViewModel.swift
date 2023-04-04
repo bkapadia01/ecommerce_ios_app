@@ -48,13 +48,14 @@ class RegisterViewModel {
                 throw ValidationError.passwordLengthTooShort.nsError
             }
             
-//            guard password == repeatedPassword else {
-//                throw ValidationError.passwordsDoNotMatch.nsError
-//            }
-//
+            guard password == repeatedPassword else {
+                throw ValidationError.passwordsDoNotMatch.nsError
+            }
+
             guard self.isUsernameUnique(username) == true else {
                 throw ValidationError.usernameAlreadyExists.nsError
             }
+            
             try KeyChainService.save(username: username, password: password)
         }
     }

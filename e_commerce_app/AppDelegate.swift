@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Core Data stack
+    
+    // move this to core data service
 
     lazy var persistentContainer: NSPersistentContainer = {
         /*
@@ -61,11 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        return container
+         return container
     }()
 
     // MARK: - Core Data Saving support
 
+    // move this to core data service too!
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {

@@ -8,34 +8,32 @@
 import UIKit
 import Security
 
-enum KeychainError: Error {
-    case itemNotFound
-    case failedToAddItem(status: OSStatus)
-    case failedToUpdateItem(status: OSStatus)
-    case unexpectedError(status: OSStatus)
-}
-
 final class LoginViewModel {
-    var userID: UUID? = nil
-    var decodedPassword: String? = nil
     
-    func getPassword(username: String) throws {
+    var userID: UUID? = nil
+
+    func checkLoginCredentials(username: String, password: String) throws {
+        guard !username.isEmpty || !password.isEmpty else {
+            throw ValidationError.missingUsernamePassword.nsError
+        }
+        guard !username.isEmpty else {
+            throw ValidationError.missingUsername.nsError
+        }
+        guard !password.isEmpty else {
+            throw ValidationError.missingPassword.nsError
+        }
+        
         do {
-            guard let data = try KeyChainService.get(username: username) else {
-                print("Failed to get data")
-                return
-            }
-            let decodedPassword = String(decoding: data, as: UTF8.self)
-            print("read password: \(decodedPassword)")
+            try KeyChainService.validatePasswordForUsername(username: username) 
         } catch {
             print(error)
             throw error
         }
     }
     
-    func loginAccountUserID(username: String, decodedPassword: String) throws {
+    func loginAccountUserID(username: String) throws {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                userID = try CoreDataService.getRegisteredUserUUID(username: username, decodedPassword: decodedPassword, appDelegate: appDelegate)
-            }
+            userID = try CoreDataService.getRegisteredUserUUID(username: username, appDelegate: appDelegate)
+        }
     }
 }

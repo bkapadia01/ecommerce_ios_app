@@ -13,7 +13,6 @@
     <entity name="RegisteredUser" representedClassName="RegisteredUser" syncable="YES">
         <attribute name="firstName" attributeType="String"/>
         <attribute name="lastName" attributeType="String"/>
-        <attribute name="password" optional="YES" attributeType="String"/>
         <attribute name="username" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="registeredUser" inverseEntity="Cart"/>

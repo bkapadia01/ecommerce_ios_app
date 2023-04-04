@@ -16,21 +16,19 @@ class KeyChainService {
     
     static func save(username: String, password: String) throws {
         let service: String = "e-commerceapp.com"
-        let keychainAccessGroupName = "com.bkap.e-commerce-app"
         let account: String = username
-        let passwordData: Data = password.data(using: .utf8) ?? Data()
+        let passwordData: Data = password.data(using: .utf8)!
 
         var query: [String: AnyObject] = [:]
         query[kSecClass as String] = kSecClassGenericPassword
         query[kSecAttrService as String] = service as AnyObject
         query[kSecAttrAccount as String] = account as AnyObject
         query[kSecValueData as String] = passwordData as AnyObject
-//        query[kSecAttrAccessGroup as String] = "com.bkap.e-commerce-app" as AnyObject
 
         let status = SecItemAdd(query as CFDictionary, nil)
         print("Save")
         
-        guard status == errSecDuplicateItem else {
+        guard status != errSecDuplicateItem else {
             print("duplicate entry, status: \(status)")
             throw KeychainError.duplicateEntry
         }
@@ -41,9 +39,8 @@ class KeyChainService {
         
     }
     
-    static func get(username: String) throws -> Data? {
+    static func validatePasswordForUsername(username: String) throws {
         let service: String = "e-commerceapp.com"
-        let keychainAccessGroupName = "AB123CDE45.myKeychainGroup1"
         let account: String = username
 
         var query: [String: AnyObject] = [:]
@@ -52,17 +49,13 @@ class KeyChainService {
         query[kSecAttrAccount as String] = account as AnyObject
         query[kSecReturnData as String] = kCFBooleanTrue
         query[kSecMatchLimit as String] = kSecMatchLimitOne
-        query[kSecAttrAccessGroup as String] = keychainAccessGroupName as AnyObject
 
-        var result: AnyObject?
-        var status = SecItemCopyMatching(query as CFDictionary, &result)
+        var result: CFTypeRef? // CFTypeRef type is the base type defined in Core Foundatio
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
 
         guard status == errSecSuccess else {
             print("status:\(status)")
-            throw KeychainError.unknown(status)
+            throw ValidationError.invalidCredentials.nsError
         }
-        print("read status: \(status)")
-        return result as! Data?
-        
     }
 }
