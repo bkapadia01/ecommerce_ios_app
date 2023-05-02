@@ -8,6 +8,11 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    enum LoginError: Error {
+        case missingUsernameField
+        case missingPasswordField
+        case invalidCredentials
+    }
     
     @IBOutlet weak var loginImageIcon: UIImageView!
     @IBOutlet weak var loginErrorLabel: UILabel?
@@ -19,8 +24,12 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginImageIcon.image = UIImage(named: "homeShoppingArt")
+        self.hideErrorMessaage()
         setDelegates()
-        loginErrorLabel?.alpha = 0 // hide error label on launch
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.hideErrorMessaage()
     }
     
     private func setDelegates() {
@@ -30,22 +39,26 @@ class LoginViewController: UIViewController {
     
     @IBAction func signInButtonTapped(_ sender: UIButton) {
         guard let loginUsername = loginUsernameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing username field")
-            return
-        }
-        guard let loginPassword = loginPasswordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            print("Error parsing password field")
-            return
+            return print("Error parsing username field")
         }
         
+        guard let loginPassword = loginPasswordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            return print("Error parsing password field")
+        }
         do {
-            try loginViewModel.validateCredentials(username: loginUsername, password: loginPassword)
+            try loginViewModel.checkLoginCredentials(username: loginUsername, password: loginPassword)
+            try loginViewModel.loginAccountUserID(username: loginUsername)
+            hideErrorMessaage()
             transitionToHomeScreen()
         } catch {
             showErrorMessaage(error.localizedDescription)
         }
     }
     
+    private func hideErrorMessaage() {
+        loginErrorLabel?.text = ""
+        loginErrorLabel?.alpha = 0
+    }
     
     private func showErrorMessaage(_ message: String) {
         loginErrorLabel?.text = message
@@ -53,7 +66,6 @@ class LoginViewController: UIViewController {
     }
     
     private func transitionToHomeScreen() {
-        
         // Home Tab
         guard let homeViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.homeCollectionViewController, creator: { coder in
             guard let userID = self.loginViewModel.userID else {

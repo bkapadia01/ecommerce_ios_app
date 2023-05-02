@@ -16,6 +16,13 @@ class CartViewModel {
     var orderItems: [OrderItem]? = []
     var products: [Product] = []
     
+    
+    // init view models with core data services instead of appdelegates
+        // in the appDelegegate move persistentContainer: NSPersistentContainer to CD service
+        // once this in CD service ..you want the persistent container to be private
+    //but you can make another computed variabled called "context"
+    // this will return the persistent container view context
+    
     init(userID: UUID, appDelegate: AppDelegate) {
         self.userID = userID
         self.appDelegate = appDelegate

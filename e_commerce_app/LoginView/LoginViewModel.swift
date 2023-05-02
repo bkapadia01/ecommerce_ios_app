@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import Security
 
 final class LoginViewModel {
-    var userID: UUID? = nil
     
-    func validateCredentials(username: String, password: String) throws {
-        
+    var userID: UUID? = nil
+
+    func checkLoginCredentials(username: String, password: String) throws {
         guard !username.isEmpty || !password.isEmpty else {
             throw ValidationError.missingUsernamePassword.nsError
         }
@@ -22,8 +23,17 @@ final class LoginViewModel {
             throw ValidationError.missingPassword.nsError
         }
         
+        do {
+            try KeyChainService.validatePasswordForUsername(username: username) 
+        } catch {
+            print(error)
+            throw error
+        }
+    }
+    
+    func loginAccountUserID(username: String) throws {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            userID = try CoreDataService.getRegisteredUserUUID(username: username, password: password, appDelegate: appDelegate)
+            userID = try CoreDataService.getRegisteredUserUUID(username: username, appDelegate: appDelegate)
         }
     }
 }
