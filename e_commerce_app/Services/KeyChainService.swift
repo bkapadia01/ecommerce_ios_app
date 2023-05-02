@@ -29,7 +29,7 @@ class KeyChainService {
         print("Save")
         
         guard status != errSecDuplicateItem else {
-            print("duplicate entry, status: \(status)")
+//            print("duplicate entry, status: \(status)")
             throw KeychainError.duplicateEntry
         }
         
@@ -54,7 +54,7 @@ class KeyChainService {
         let status = SecItemCopyMatching(query as CFDictionary, &result)
 
         guard status == errSecSuccess else {
-            print("status:\(status)")
+//            print("status:\(status)")
             throw ValidationError.invalidCredentials.nsError
         }
     }
