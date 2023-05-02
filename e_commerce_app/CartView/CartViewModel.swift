@@ -11,18 +11,18 @@ import UIKit
 
 class CartViewModel {
     let userID: UUID
-    let appDelegate: AppDelegate
     var dictionaryIndexPathOfSelectedItem: [IndexPath: Bool] = [:]
     var orderItems: [OrderItem]? = []
     var products: [Product] = []
+    let coreDataService: CoreDataService
     
-    init(userID: UUID, appDelegate: AppDelegate) {
+    init(userID: UUID, coreDataService: CoreDataService = CoreDataService()) {
         self.userID = userID
-        self.appDelegate = appDelegate
+        self.coreDataService = CoreDataService()
     }
     
     func getOrderItemsForLoggedInUser() throws -> [OrderItem] {
-        let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
+        let registeredUser = try coreDataService.getRegisteredUser(userID: userID)
         
         guard let userOrderCartItems = registeredUser.cart?.orderItems else {
             return []
@@ -32,19 +32,19 @@ class CartViewModel {
     }
     
     func getOrderItemsDataForLoggedInUser() throws -> Data? {
-        let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
+        let registeredUser = try coreDataService.getRegisteredUser(userID: userID)
         let userOrderItemsData = registeredUser.cart?.orderItems
         return userOrderItemsData
     }
     
     func checkoutCartOrderItemsToPaidOrder() throws {
-        let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
-        CoreDataService.addPaidOrderForCartCheckoutItem(registeredUser: registeredUser, appDelegate: appDelegate)
+        let registeredUser = try coreDataService.getRegisteredUser(userID: userID)
+        coreDataService.addPaidOrderForCartCheckoutItem(registeredUser: registeredUser)
         registeredUser.cart?.orderItems = nil
     }
     
     func productDetailToSaveToCart() throws {
-        let context = appDelegate.persistentContainer.viewContext
+        let context = coreDataService.persistentContainer.viewContext
 
         try? self.checkoutCartOrderItemsToPaidOrder()
         do {
@@ -57,7 +57,7 @@ class CartViewModel {
     func deleteSelectedItemsFromCart() {
         
         do {
-            let registeredUser = try CoreDataService.getRegisteredUser(userID: self.userID, appDelegate: appDelegate)
+            let registeredUser = try coreDataService.getRegisteredUser(userID: self.userID)
             for (indexPath, shouldDelete) in dictionaryIndexPathOfSelectedItem {
                 if shouldDelete {
                     orderItems?.remove(at: indexPath.item)
@@ -65,7 +65,7 @@ class CartViewModel {
             }
 
             registeredUser.cart?.orderItems = try JSONEncoder().encode(orderItems)
-            appDelegate.saveContext()
+            coreDataService.saveContext()
             dictionaryIndexPathOfSelectedItem.removeAll()
         } catch {
             print(error)

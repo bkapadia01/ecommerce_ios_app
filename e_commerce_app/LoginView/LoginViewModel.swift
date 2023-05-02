@@ -16,24 +16,14 @@ enum KeychainError: Error {
 }
 
 final class LoginViewModel {
+    
+    let coreDataService: CoreDataService
+    
+    init(coreDataService: CoreDataService = CoreDataService()) {
+        self.coreDataService = coreDataService
+    }
+    
     var userID: UUID? = nil
-//
-//    func validateCredentials(username: String, password: String) throws {
-//
-//        guard !username.isEmpty || !password.isEmpty else {
-//            throw ValidationError.missingUsernamePassword.nsError
-//        }
-//        guard !username.isEmpty else {
-//            throw ValidationError.missingUsername.nsError
-//        }
-//        guard !password.isEmpty else {
-//            throw ValidationError.missingPassword.nsError
-//        }
-//
-//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//            userID = try CoreDataService.getRegisteredUserUUID(username: username, password: password, appDelegate: appDelegate)
-//        }
-//    }
     
     func validateCredentialUsingKeychain(username: String, password: String)  throws  {
         let service = "e-commerce app"
@@ -80,9 +70,9 @@ final class LoginViewModel {
               throw KeychainError.unexpectedError(status: status)
           }
         
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                       userID = try CoreDataService.getRegisteredUserUUID(username: username, password: password, appDelegate: appDelegate)
-           }
+//            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                       userID = try coreDataService.getRegisteredUserUUID(username: username, password: password)
+//           }
     }
     
     

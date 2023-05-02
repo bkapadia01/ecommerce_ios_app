@@ -8,21 +8,20 @@
 import UIKit
 
 class RegisterViewModel {
+    let coreDataService: CoreDataService
+
+    init(coreDataService: CoreDataService = CoreDataService()) {
+        self.coreDataService = coreDataService
+    }
     
     func saveRegisteredUser(firstName: String, lastName: String, username: String, password: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            preconditionFailure()
-        }
-        
-        CoreDataService.saveRegisteringUser(firstName: firstName, lastName: lastName, username: username, password: password, appDelegate: appDelegate)
+    
+        coreDataService.saveRegisteringUser(firstName: firstName, lastName: lastName, username: username, password: password)
     }
     
     func isUsernameUnique(_ username: String) -> Bool {
-        guard let  appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            preconditionFailure()
-        }
         
-        let usernames = CoreDataService.getRegistredUsernames(appDelegate: appDelegate)
+        let usernames = coreDataService.getRegistredUsernames()
         if usernames.contains(where: { $0 == username }) {
             return false
         }

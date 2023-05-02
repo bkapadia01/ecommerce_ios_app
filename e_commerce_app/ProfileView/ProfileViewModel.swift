@@ -17,14 +17,14 @@ struct UserRenderableInfo {
 class ProfileViewModel {
     
     let userID: UUID
-    let appDelegate: AppDelegate
-    init(userID: UUID, appDelegate: AppDelegate) {
+    let coreDataService: CoreDataService
+    init(userID: UUID, coreDataService: CoreDataService = CoreDataService()) {
         self.userID = userID
-        self.appDelegate = appDelegate
+        self.coreDataService = coreDataService
     }
 
     func getRegisteredUser() throws -> RegisteredUser {
-        let getRegisteredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
+        let getRegisteredUser = try coreDataService.getRegisteredUser(userID: userID)
         return getRegisteredUser
     }
     
@@ -34,8 +34,8 @@ class ProfileViewModel {
     }
     
     func getPaidOrderItems() throws -> [PaidOrder] {
-        let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
-        let userOrderPaidItems = try CoreDataService.getPaidOrdersForUser(registeredUser: registeredUser, appDelegate: appDelegate)
+        let registeredUser = try coreDataService.getRegisteredUser(userID: userID)
+        let userOrderPaidItems = try coreDataService.getPaidOrdersForUser(registeredUser: registeredUser)
         return userOrderPaidItems
     }
     
