@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22E252" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Cart" representedClassName="Cart" syncable="YES">
         <attribute name="orderItems" optional="YES" attributeType="Binary"/>
         <relationship name="registeredUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RegisteredUser" inverseName="cart" inverseEntity="RegisteredUser"/>
@@ -13,15 +13,9 @@
     <entity name="RegisteredUser" representedClassName="RegisteredUser" syncable="YES">
         <attribute name="firstName" attributeType="String"/>
         <attribute name="lastName" attributeType="String"/>
-        <attribute name="password" attributeType="String"/>
         <attribute name="username" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="registeredUser" inverseEntity="Cart"/>
         <relationship name="paidOrders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PaidOrder" inverseName="registeredUser" inverseEntity="PaidOrder"/>
     </entity>
-    <elements>
-        <element name="Cart" positionX="-162.7421875" positionY="371.5" width="128" height="59"/>
-        <element name="PaidOrder" positionX="376.71484375" positionY="362.7265625" width="128" height="89"/>
-        <element name="RegisteredUser" positionX="86.453125" positionY="201.95703125" width="128" height="134"/>
-    </elements>
 </model>

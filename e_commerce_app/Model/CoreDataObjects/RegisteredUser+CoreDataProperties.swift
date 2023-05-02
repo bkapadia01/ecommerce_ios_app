@@ -18,7 +18,6 @@ extension RegisteredUser {
 
     @NSManaged public var firstName: String?
     @NSManaged public var lastName: String?
-    @NSManaged public var password: String?
     @NSManaged public var username: String?
     @NSManaged public var uuid: UUID?
     @NSManaged public var cart: Cart?

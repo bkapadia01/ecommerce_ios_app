@@ -63,10 +63,7 @@ class CoreDataService {
                 print("Username does not exists in database")
                 throw ValidationError.invalidCredentials.nsError
             }
-            if registeredUser.password != password {
-                print("Passwords does not match exiting user in database")
-                throw ValidationError.invalidCredentials.nsError
-            }
+           
             return registeredUser.uuid!
         }
     }
@@ -95,7 +92,6 @@ class CoreDataService {
         newUser.firstName = firstName
         newUser.lastName = lastName
         newUser.username = username
-        newUser.password = password
         guard let uuid = UUID(uuidString: UUID().uuidString) else {
             preconditionFailure("Unable to create UUID")
         }

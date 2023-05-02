@@ -70,9 +70,7 @@ final class LoginViewModel {
               throw KeychainError.unexpectedError(status: status)
           }
         
-//            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                       userID = try coreDataService.getRegisteredUserUUID(username: username, password: password)
-//           }
+         userID = try coreDataService.getRegisteredUserUUID(username: username, password: password)
     }
     
     
