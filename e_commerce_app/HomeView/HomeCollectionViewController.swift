@@ -50,7 +50,7 @@ class HomeCollectionViewController: UICollectionViewController {
         if let itemDetailViewController = storyboard?.instantiateViewController(identifier: Constants.Stroyboard.itemDetailViewController, creator: { coder in // <<<<
             let userID = self.homeViewModel.userID
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let itemDetailViewModel = ItemDetailViewModel(userID: userID, product: selectedProduct, appDelegate: appDelegate)
+            let itemDetailViewModel = ItemDetailViewModel(userID: userID, product: selectedProduct)
             return ItemDetailViewController(itemDetailViewModel: itemDetailViewModel, coder: coder)
         }) {
             navigationController?.pushViewController(itemDetailViewController, animated: true)

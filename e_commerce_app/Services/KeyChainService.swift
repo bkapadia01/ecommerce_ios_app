@@ -50,7 +50,7 @@ class KeyChainService {
         query[kSecReturnData as String] = kCFBooleanTrue
         query[kSecMatchLimit as String] = kSecMatchLimitOne
 
-        var result: CFTypeRef? // CFTypeRef type is the base type defined in Core Foundatio
+        var result: CFTypeRef? // CFTypeRef type is the base type defined in Core Foundation
         let status = SecItemCopyMatching(query as CFDictionary, &result)
 
         guard status == errSecSuccess else {

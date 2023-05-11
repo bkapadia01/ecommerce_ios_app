@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginPasswordField: UITextField!
     
     let loginViewModel = LoginViewModel()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,9 +47,7 @@ class LoginViewController: UIViewController {
             return print("Error parsing password field")
         }
         do {
-            try loginViewModel.checkLoginCredentials(username: loginUsername, password: loginPassword)
-            try loginViewModel.loginAccountUserID(username: loginUsername)
-            hideErrorMessaage()
+            try loginViewModel.validateCredentialUsingKeychain(username: loginUsername, password: loginPassword)
             transitionToHomeScreen()
         } catch {
             showErrorMessaage(error.localizedDescription)
@@ -71,8 +70,7 @@ class LoginViewController: UIViewController {
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let homeViewModel = HomeViewModel(userID: userID, appDelegate: appDelegate)
+            let homeViewModel = HomeViewModel(userID: userID)
             return HomeCollectionViewController(homeViewModel: homeViewModel, coder: coder)
             
         }) else {
@@ -84,8 +82,7 @@ class LoginViewController: UIViewController {
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let cartViewModel = CartViewModel(userID: userID, appDelegate: appDelegate)
+            let cartViewModel = CartViewModel(userID: userID)
             return CartCollectionViewController(cartViewModel: cartViewModel, coder: coder)
         }) else {
             preconditionFailure("Tab view controller could not be setup")
@@ -96,8 +93,7 @@ class LoginViewController: UIViewController {
             guard let userID = self.loginViewModel.userID else {
                 preconditionFailure("UserID not set")
             }
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let profileViewModel = ProfileViewModel(userID: userID, appDelegate: appDelegate)
+            let profileViewModel = ProfileViewModel(userID: userID)
             return ProfileViewController(profileViwModel: profileViewModel, coder: coder)
         }) else {
             preconditionFailure("Tab view controller could not be setup")

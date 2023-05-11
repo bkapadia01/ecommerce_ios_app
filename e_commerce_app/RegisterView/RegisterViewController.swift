@@ -18,6 +18,7 @@ class RegisterViewController: UIViewController {
     
     let registerViewModel = RegisterViewModel()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         hideErrorMessage()

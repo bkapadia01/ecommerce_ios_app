@@ -16,7 +16,6 @@ class ItemDetailViewController: UIViewController {
     
     private let itemDetailViewModel: ItemDetailViewModel
     
-    
     init?(itemDetailViewModel: ItemDetailViewModel, coder: NSCoder) {
         self.itemDetailViewModel = itemDetailViewModel
         super.init(coder: coder)
@@ -58,8 +57,7 @@ class ItemDetailViewController: UIViewController {
     }
     
     @IBAction func itemDetailViewAddItemToBag(_ sender: Any) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        itemDetailViewModel.productDetailToSaveToCart(appDelegate: appDelegate) //<<<
+        itemDetailViewModel.productDetailToSaveToCart() //<<<
         let itemAddedToCartAlert = UIAlertController(title: AppLocalizable.itemAddedToCart.localized(), message: AppLocalizable.viewItemInCart.localized(), preferredStyle: UIAlertController.Style.alert)
         itemAddedToCartAlert.addAction(UIAlertAction(title: AppLocalizable.ok.localized(), style:.default, handler: nil))
         
