@@ -7,15 +7,54 @@
 
 import CoreData
 
-enum CoreDataService {
-    //remove injection app delegate everywehre and persistent continaer
-    // core data service will already have the context within it so you dont need the "persistentContainer.viewcontexT" paramater
+class CoreDataService {
     
-    // finish the keychain work first and then move on this
-    
-    static func getRegisteredUserUUID(username: String, appDelegate: AppDelegate) throws -> UUID {
+    lazy var persistentContainer: NSPersistentContainer = {
+           /*
+            The persistent container for the application. This implementation
+            creates and returns a container, having loaded the store for the
+            application to it. This property is optional since there are legitimate
+            error conditions that could cause the creation of the store to fail.
+           */
+           let container = NSPersistentContainer(name: "UsersModel")
+           container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+               if let error = error as NSError? {
+                   // Replace this implementation with code to handle the error appropriately.
+                   // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+   
+                   /*
+                    Typical reasons for an error here include:
+                    * The parent directory does not exist, cannot be created, or disallows writing.
+                    * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+                    * The device is out of space.
+                    * The store could not be migrated to the current model version.
+                    Check the error message to determine what the actual problem was.
+                    */
+                   fatalError("Unresolved error \(error), \(error.userInfo)")
+               }
+           })
+           return container
+       }()
+
+       // MARK: - Core Data Saving support
+
+       func saveContext () {
+           let context = persistentContainer.viewContext
+           if context.hasChanges {
+               do {
+                   try context.save()
+               } catch {
+                   // Replace this implementation with code to handle the error appropriately.
+                   // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                   let nserror = error as NSError
+                   fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+               }
+           }
+       }
         
-        let context = appDelegate.persistentContainer.viewContext
+    func getRegisteredUserUUID(username: String, password: String) throws -> UUID {
+        
+        let context = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
         let predicate = NSPredicate(format: "username == %@", username)
         fetchRequest.predicate = predicate
@@ -30,9 +69,9 @@ enum CoreDataService {
     }
     
     
-    static func getRegistredUsernames(appDelegate: AppDelegate) -> [String] {
+    func getRegistredUsernames() -> [String] {
         
-        let context = appDelegate.persistentContainer.viewContext
+        let context = persistentContainer.viewContext
         
         do {
             let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
@@ -44,8 +83,8 @@ enum CoreDataService {
         }
     }
     
-    static func saveRegisteringUser(firstName: String, lastName: String, username: String, appDelegate: AppDelegate) {
-        let context = appDelegate.persistentContainer.viewContext
+     func saveRegisteringUser(firstName: String, lastName: String, username: String, password: String) {
+        let context = persistentContainer.viewContext
         
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "RegisteredUser", in: context) else { return }
         let newUser = RegisteredUser(entity: entityDescription,
@@ -57,7 +96,7 @@ enum CoreDataService {
             preconditionFailure("Unable to create UUID")
         }
         newUser.uuid = uuid
-        newUser.cart = createCartForNewUser(appDelegate: appDelegate)
+        newUser.cart = createCartForNewUser()
         do {
             try context.save()
             print("Save Successfull")
@@ -67,14 +106,14 @@ enum CoreDataService {
         }
     }
     
-    static func createCartForNewUser(appDelegate: AppDelegate) -> Cart {
-        return Cart(entity: NSEntityDescription.entity(forEntityName: "Cart", in: appDelegate.persistentContainer.viewContext)!, insertInto: appDelegate.persistentContainer.viewContext)
+    func createCartForNewUser() -> Cart {
+        return Cart(entity: NSEntityDescription.entity(forEntityName: "Cart", in: persistentContainer.viewContext)!, insertInto: persistentContainer.viewContext)
     }
     
-    static func getLoggedInUsernameForUuid(userID: UUID, appDelegate: AppDelegate) -> String {
+    func getLoggedInUsernameForUuid(userID: UUID) -> String {
         var loggedInUsername: String = ""
 
-        let context = appDelegate.persistentContainer.viewContext
+        let context = persistentContainer.viewContext
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "RegisteredUser")
         let predicate = NSPredicate(format: "uuid = %@", userID as CVarArg)
         fetch.predicate = predicate
@@ -92,8 +131,8 @@ enum CoreDataService {
         return loggedInUsername
     }
     
-    static func getRegisteredUser(userID: UUID, appDelegate: AppDelegate) throws -> RegisteredUser {
-        let context = appDelegate.persistentContainer.viewContext
+    func getRegisteredUser(userID: UUID) throws -> RegisteredUser {
+        let context = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<RegisteredUser> (entityName: "RegisteredUser")
         let predicate = NSPredicate(format: "uuid == %@", userID as CVarArg)
         fetchRequest.predicate = predicate
@@ -106,8 +145,8 @@ enum CoreDataService {
         }
     }
     
-    static func addPaidOrderForCartCheckoutItem(registeredUser: RegisteredUser, appDelegate: AppDelegate) {
-        let context = appDelegate.persistentContainer.viewContext
+    func addPaidOrderForCartCheckoutItem(registeredUser: RegisteredUser) {
+        let context = persistentContainer.viewContext
         
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "PaidOrder", in: context) else { return }
         let paidOrderData = PaidOrder(entity: entityDescription, insertInto: context)
@@ -121,8 +160,8 @@ enum CoreDataService {
         }
     }
     
-    static func getPaidOrdersForUser(registeredUser: RegisteredUser, appDelegate: AppDelegate) throws -> [PaidOrder] {
-        let context = appDelegate.persistentContainer.viewContext
+    func getPaidOrdersForUser(registeredUser: RegisteredUser) throws -> [PaidOrder] {
+        let context = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<PaidOrder> (entityName: "PaidOrder")
         
         let predicate = NSPredicate(format: "registeredUser == %@", registeredUser)
@@ -130,9 +169,5 @@ enum CoreDataService {
        
         let paidOrders = try context.fetch(fetchRequest)
         return paidOrders
-     
     }
-    
-    
-    
 }

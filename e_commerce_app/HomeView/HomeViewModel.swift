@@ -20,11 +20,11 @@ final class HomeViewModel {
     var products: [Product] = []
     var productItems: [Product] = []
     let userID: UUID
-    let appDelegate: AppDelegate
+    let coreDataService: CoreDataService
     
-    init(userID: UUID, appDelegate: AppDelegate) {
+    init(userID: UUID, coreDataService:CoreDataService = CoreDataService()) {
         self.userID = userID
-        self.appDelegate = appDelegate
+        self.coreDataService = coreDataService
     }
     
     func getProductInfo(at indexPath: IndexPath) -> ProductRenderableInfo {
@@ -43,8 +43,7 @@ final class HomeViewModel {
     }
     
     func getLoggedInUsername() -> String {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let loggedInUsername = CoreDataService.getLoggedInUsernameForUuid(userID: userID, appDelegate: appDelegate)
+        let loggedInUsername = coreDataService.getLoggedInUsernameForUuid(userID: userID)
         
         return loggedInUsername
     }

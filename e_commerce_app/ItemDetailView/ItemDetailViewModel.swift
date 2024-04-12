@@ -10,23 +10,23 @@ import Foundation
 class ItemDetailViewModel {
     let product: Product
     let userID: UUID
-    let appDelegate: AppDelegate
+    let coreDataService: CoreDataService
     
-    init(userID: UUID, product: Product, appDelegate: AppDelegate) {
+    init(userID: UUID, product: Product, coreDataService: CoreDataService = CoreDataService()) {
         self.userID = userID
         self.product = product
-        self.appDelegate = appDelegate
+        self.coreDataService = coreDataService
     }
     
-    func productDetailToSaveToCart(appDelegate: AppDelegate) {
-        let context = appDelegate.persistentContainer.viewContext
+    func productDetailToSaveToCart() {
+        let context = coreDataService.persistentContainer.viewContext
         
         guard let selectedItemId = self.product.id else { return }
         guard let selectedItemName = self.product.title else { return }
         guard let selectedItemPrice = self.product.price else { return}
         guard let selectedItemImage = self.product.image else { return }
         
-        try? self.saveOrderItem(id: selectedItemId, name: selectedItemName, price: selectedItemPrice, image: selectedItemImage, appDelegate: appDelegate)
+        try? self.saveOrderItem(id: selectedItemId, name: selectedItemName, price: selectedItemPrice, image: selectedItemImage)
         do {
             try context.save()
         } catch {
@@ -35,7 +35,7 @@ class ItemDetailViewModel {
     }
     
     func getOrderItemsForLoggedInUser() throws -> [OrderItem] {
-        let registeredUser = try CoreDataService.getRegisteredUser(userID: userID, appDelegate: appDelegate)
+        let registeredUser = try coreDataService.getRegisteredUser(userID: userID)
         
         guard let userOrderItems = registeredUser.cart?.orderItems else {
             return []
@@ -45,10 +45,10 @@ class ItemDetailViewModel {
         return decodedOrderItems
     }
     
-    func saveOrderItem(id: Int, name: String, price: Double, image: String, appDelegate: AppDelegate) throws {
+    func saveOrderItem(id: Int, name: String, price: Double, image: String) throws {
         let orderItem = OrderItem(id: id, name: name, price: price, image: image )
         let userUUID = userID as UUID
-        let registeredUser = try CoreDataService.getRegisteredUser(userID: userUUID, appDelegate: appDelegate)
+        let registeredUser = try coreDataService.getRegisteredUser(userID: userUUID)
         
         if let orderItemData = registeredUser.cart?.orderItems {
             var orderItems = try JSONDecoder().decode([OrderItem].self, from: orderItemData)
