@@ -1,4 +1,4 @@
-# ecommerce_ios_app - Assignment 3
+# ecommerce_ios_app
 This is an eCommerce ios app built using [fake store api](https://fakestoreapi.com/).
 The app is designed to respect the MVVM architecture model.
 
